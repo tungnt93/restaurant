@@ -33,43 +33,43 @@ Class MY_Controller extends CI_Controller {
 				// 	$this->content_model->update(1, array('view'=>$total_view));
 				// }
 				$this->update_view();
-				$this->load->model('catalog_model');
-				$input_catalog = array();
-				$input_catalog['where']['parent_id'] = 0;
-				$input_catalog['order'] = array('position','ASC');
-				$list_catalog = $this->catalog_model->get_list($input_catalog);
-				
-				foreach ($list_catalog as $key => $value) {
-					$id_catalog = $value->id;
-					$input_catalog_child = array();
-					$input_catalog_child['where']['parent_id'] = $id_catalog;
-					$input_catalog_child['order'] = array('position','ASC');
-					$list_catalog[$key]->child_1 = $this->catalog_model->get_list($input_catalog_child);
-					foreach ($list_catalog[$key]->child_1 as $k => $v) {
-						$id_catalog_sub = $v->id;
-						$input_catalog_child_1 = array();
-						$input_catalog_child_1['where']['parent_id'] = $id_catalog_sub;
-						$input_catalog_child_1['order'] = array('position','ASC');
-						$list_catalog[$key]->child_1[$k]->child_2 = $this->catalog_model->get_list($input_catalog_child_1);
-					}
-				}
-				$this->data['catalog'] = $list_catalog;
+//				$this->load->model('catalog_model');
+//				$input_catalog = array();
+//				$input_catalog['where']['parent_id'] = 0;
+//				$input_catalog['order'] = array('position','ASC');
+//				$list_catalog = $this->catalog_model->get_list($input_catalog);
+//
+//				foreach ($list_catalog as $key => $value) {
+//					$id_catalog = $value->id;
+//					$input_catalog_child = array();
+//					$input_catalog_child['where']['parent_id'] = $id_catalog;
+//					$input_catalog_child['order'] = array('position','ASC');
+//					$list_catalog[$key]->child_1 = $this->catalog_model->get_list($input_catalog_child);
+//					foreach ($list_catalog[$key]->child_1 as $k => $v) {
+//						$id_catalog_sub = $v->id;
+//						$input_catalog_child_1 = array();
+//						$input_catalog_child_1['where']['parent_id'] = $id_catalog_sub;
+//						$input_catalog_child_1['order'] = array('position','ASC');
+//						$list_catalog[$key]->child_1[$k]->child_2 = $this->catalog_model->get_list($input_catalog_child_1);
+//					}
+//				}
+//				$this->data['catalog'] = $list_catalog;
 
 				//noi dung website
 				$content = $this->content_model->get_info(1);
 				$this->data['content'] = $content;
 
 				//san pham noi bat
-				$this->load->model('hot_product_model');
-				$this->load->model('product_model');
-				$list_product = $this->product_model->get_list();
-			    $list_hot = $this->hot_product_model->get_list();
-			    $list_hot_product = array();
-			    foreach ($list_hot as $value) {
-			    	$list_hot_product[] = $this->product_model->get_info($value->product_id);
-			    }
+//				$this->load->model('hot_product_model');
+//				$this->load->model('product_model');
+//				$list_product = $this->product_model->get_list();
+//			    $list_hot = $this->hot_product_model->get_list();
+//			    $list_hot_product = array();
+//			    foreach ($list_hot as $value) {
+//			    	$list_hot_product[] = $this->product_model->get_info($value->product_id);
+//			    }
 			    //pre($list_hot_product);
-			    $this->data['list_hot_product'] = $list_hot_product;
+//			    $this->data['list_hot_product'] = $list_hot_product;
 			}
 		}
 	}

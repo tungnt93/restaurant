@@ -10,7 +10,7 @@
 </div>
 <div class="x_panel">
     <div class="x_title">
-        <h2>Danh sách sản phẩm</h2>
+        <h2>Danh sách</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
             <li class="dropdown">
@@ -46,11 +46,12 @@
                     <td><input type="checkbox" id="check-all" class="flat"></td>
                     <td><?php echo $value->id?></td>
                     <td><?php echo $value->name?></td>
-                    <td><?php echo $value->img_link?></td>
-                    <td><?php echo $value->catalog_id?></td>
-                    <td><?php echo $value->price?></td>
+                    <td><img src="<?php echo public_url('images/product/'.$value->img_link)?>" style="max-width: 150px"></td>
+                    <td><?php echo $this->catalog_model->get_info($value->catalog_id)->name?></td>
+                    <td><?php echo number_format($value->price)?>đ</td>
                     <td>
-
+                        <a href="<?php echo admin_url('product/edit/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
+                        <a onclick="delCatalog(<?php echo $value->id?>)" class="btn btn-xs btn-danger">Xóa</a>
                     </td>
                 </tr>
             <?php endforeach ?>

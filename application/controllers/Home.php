@@ -5,6 +5,7 @@ Class Home extends MY_Controller {
 		$this->load->model('product_model');
 		$this->load->model('content_model');
 		$this->load->model('sale_model');
+		$this->load->model('catalog_model');
 	}
 	
 	function index() {
@@ -24,6 +25,11 @@ Class Home extends MY_Controller {
 		$list_product = $this->product_model->get_list($input);
 		$this->data['paginator'] = $paginator;
 		$this->data['list_product'] = $list_product;
+
+        $input = array();
+        $input['order'] = array('position', 'ASC');
+        $catalog = $this->catalog_model->get_list($input);
+        $this->data['catalog'] = $catalog;
 
 		$input = array();
         $input['limit'] = array(8, 0);
