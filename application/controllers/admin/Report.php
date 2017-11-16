@@ -2,7 +2,7 @@
 Class Report extends MY_Controller {
 	function __construct() {
 		parent::__construct();
-		$this->load->model('admin_model');
+		$this->load->model('user_model');
 		$this->load->model('content_model');
 		$this->load->model('product_model');
 		$this->load->model('catalog_model');
@@ -13,7 +13,7 @@ Class Report extends MY_Controller {
 	    $this->data['message'] = $message;
 	    
     	$this->data['view'] = $this->content_model->get_info(1)->view;
-    	$this->data['total_admin'] = $this->admin_model->get_total();
+    	$this->data['total_admin'] = $this->user_model->get_total();
     	$this->data['total_product'] = $this->product_model->get_total();
     	$this->data['total_catalog'] = $this->catalog_model->get_total();
 

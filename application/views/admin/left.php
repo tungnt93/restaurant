@@ -48,7 +48,8 @@
                       <li><a href="<?php echo admin_url('content/slider')?>">Slide</a></li>
                     </ul>
                   </li>
-                  <li><a href="<?php echo admin_url('admin')?>"><i class="fa fa-users" aria-hidden="true"></i></i> Quản trị viên <!-- <span class="fa fa-chevron-down"></span> --></a></li>
+                  <li><a href="<?php echo admin_url('employee')?>"><i class="fa fa-users" aria-hidden="true"></i> Quản lý nhân sự <!-- <span class="fa fa-chevron-down"></span> --></a></li>
+                  <li><a href="<?php echo admin_url('user')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> Tài khoản <!-- <span class="fa fa-chevron-down"></span> --></a></li>
                 </ul>
               </div>
 

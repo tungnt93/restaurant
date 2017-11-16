@@ -5,8 +5,8 @@
 			<div class="count"><?php echo explode('-', $view)[0] ?></div>
 		</div>
 		<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-		    <a href="<?php echo admin_url('admin') ?>"><span class="count_top"><i class="fa fa-user"></i> Admin</span></a>
-		    <a href="<?php echo admin_url('admin') ?>"><div class="count green"><?php echo $total_admin ?></div></a>
+		    <a href="<?php echo admin_url('Employee') ?>"><span class="count_top"><i class="fa fa-user"></i> Admin</span></a>
+		    <a href="<?php echo admin_url('Employee') ?>"><div class="count green"><?php echo $total_admin ?></div></a>
 		</div>
 		<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
 		    <a href="<?php echo admin_url('product') ?>"><span class="count_top"><i class="fa fa-product-hunt"></i> Sản phẩm</span></a>

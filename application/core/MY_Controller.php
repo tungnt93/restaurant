@@ -15,7 +15,7 @@ Class MY_Controller extends CI_Controller {
 		
 		switch ($new_url) {
 			case 'admin' : {
-				//pre("abc");
+//				pre("abc");
 				$this->_check_login();
 				$this->data['admin'] = $this->session->userdata('admin');
                 break;
@@ -83,13 +83,13 @@ Class MY_Controller extends CI_Controller {
         //neu ma chua dang nhap,ma truy cap 1 controller khac login
         if(!$login && $controller != 'login')
         {
-        	//pre("abc");
+//        	pre("abc");
             redirect(base_url('admin/login'));
         }
         //neu ma admin da dang nhap thi khong cho phep vao trang login nua.
         if($login && $controller == 'login')
         {
-        	//pre('abc');
+//            pre('abc');
             redirect(base_url('admin/report'));
         }
     }

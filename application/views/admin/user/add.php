@@ -1,11 +1,11 @@
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
 
 <div class="page-title">
-	<div class="title_left"><h3>Thêm quản trị viên mới</h3></div>
+	<div class="title_left"><h3>Thêm nhân viên mới</h3></div>
 	<div class="title_right">
 		<div class="col-md-5 col-sm-5 col-xs-12 pull-right">
-			<a href="<?php echo admin_url('admin/add')?>" class="btn btn-primary btn-sm">Thêm mới</a>
-			<a href="<?php echo admin_url('admin')?>" class="btn btn-info btn-sm">Danh sách</a>
+			<a href="<?php echo admin_url('user/add')?>" class="btn btn-primary btn-sm">Thêm mới</a>
+			<a href="<?php echo admin_url('user')?>" class="btn btn-info btn-sm">Danh sách</a>
 		</div>
 	</div>
 </div>
@@ -37,12 +37,17 @@
         	</div>
       	</div>
       	<div class="form-group">
-        	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Quyền hạn<span class="required">*</span></label>
-        	<div class="col-md-2 col-sm-2 col-xs-12">
-          		<select class="select2_multiple form-control" name="slType">
-          			<option value="2" selected="selected">Giới hạn</option>
-          			<option value="1">Toàn quyền</option>
-				</select>
+        	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Vị trí<span class="required">*</span></label>
+        	<div class="col-md-4 col-sm-4 col-xs-12">
+                <select class="select2_multiple form-control" name="department" id="department">
+                    <?php foreach ($department as $row) { ?>
+                        <optgroup label="<?php echo $row->name?>">
+                            <?php foreach ($row->child as $r){ ?>
+                                <option value="<?php echo $r->id?>" ><?php echo $r->name?></option>
+                            <?php }?>
+                        </optgroup>
+                    <?php } ?>
+                </select>
         	</div>
       	</div>
       	<div class="form-group">

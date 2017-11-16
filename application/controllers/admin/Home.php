@@ -2,14 +2,15 @@
 Class Home extends MY_Controller {
 	function __construct() {
 		parent::__construct();
-		$this->load->model('admin_model');
+		$this->load->model('user_model');
 	}
 	
 	function index() {
 		//$data = array();
-		//pre($this->data);
-		$this->data['temp'] = 'admin/index';
-		$this->load->view('admin/layout', $this->data);
+//		pre($this->data);
+//		$this->data['temp'] = 'admin/index';
+//		$this->load->view('admin/layout', $this->data);
+        redirect(base_url('admin/report'));
 	}
 
 	function logout()
@@ -17,7 +18,7 @@ Class Home extends MY_Controller {
     	//pre($this->session->userdata('admin'));
         if($this->session->userdata('login')){
             $this->session->unset_userdata('login');
-            $this->session->unset_userdata('admin');
+            $this->session->unset_userdata('Employee');
             $this->session->sess_destroy();
         }
         //pre($this->session->userdata('admin'));
@@ -28,7 +29,7 @@ Class Home extends MY_Controller {
 	    $this->data['message'] = $message;
 	    
     	if($this->input->post('btnUpdateInfo')){
-    		$admin = $this->session->userdata('admin');
+    		$admin = $this->session->userdata('Employee');
     		$oldPassword = $this->input->post('txtOldPassword');
     		$fullname = $this->input->post('txtName');
     		if(strlen($fullname) > 0){
@@ -38,7 +39,7 @@ Class Home extends MY_Controller {
 	    				$confirmPassword = $this->input->post('txtConfirm');
 	    				if($newPassword == $confirmPassword){
 	    					$dataSubmit = array('fullname' => $fullname,'password'=>md5($newPassword));
-	    					if($this->admin_model->update($admin->id, $dataSubmit)){
+	    					if($this->user_model->update($admin->id, $dataSubmit)){
 		    					$this->session->set_flashdata('message', 'Cập nhật thông tin thành công, vui lòng đăng xuất và đăng nhập lại!');
 		    				}
 		    				else{
@@ -51,7 +52,7 @@ Class Home extends MY_Controller {
 	    			}
 	    			else{
 	    				$dataSubmit = array('fullname' => $fullname);
-	    				if($this->admin_model->update($admin->id, $dataSubmit)){
+	    				if($this->user_model->update($admin->id, $dataSubmit)){
 	    					$this->session->set_flashdata('message', 'Cập nhật thông tin thành công, vui lòng đăng xuất và đăng nhập lại!');
 	    				}
 	    				else{

@@ -57,3 +57,27 @@
 <script src="<?php echo admin_theme('');?>/vendors/jszip/dist/jszip.min.js"></script>
 <script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#txtBirthday').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        $('#txtStartDate').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            locale: {
+                format: 'DD-MM-YYYY'
+            }
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+</script>

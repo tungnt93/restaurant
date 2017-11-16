@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 15, 2017 lúc 05:50 PM
+-- Thời gian đã tạo: Th10 16, 2017 lúc 06:32 PM
 -- Phiên bản máy phục vụ: 10.1.26-MariaDB
 -- Phiên bản PHP: 7.0.23
 
@@ -21,30 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `restaurant`
 --
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `fullname` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `create_time` int(11) NOT NULL,
-  `create_by` int(11) NOT NULL,
-  `type` tinyint(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `admin`
---
-
-INSERT INTO `admin` (`id`, `username`, `password`, `fullname`, `create_time`, `create_by`, `type`) VALUES
-(1, 'admin', '5c5ca2ca10bd5d843628909e166609fe', 'Admin', 1493721361, 1, 1),
-(2, 'admin_sgc', '5c5ca2ca10bd5d843628909e166609fe', 'Admin SGC', 1494310891, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +88,88 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`id`, `company_name`, `address`, `email`, `phone`, `intro`, `facebook`, `google`, `twitter`, `youtube`, `logo`, `slider`, `view`) VALUES
-(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3839-1400-11/2017-247-0-15/11/2017-0');
+(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3841-1400-11/2017-249-2-17/11/2017-0');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `department`
+--
+
+CREATE TABLE `department` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `parent_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `department`
+--
+
+INSERT INTO `department` (`id`, `name`, `parent_id`) VALUES
+(1, 'Bộ phận phục vụ', 0),
+(2, 'Bộ phận bếp', 0),
+(4, 'Bộ phận kho', 0),
+(5, 'Bộ phận quản lý tài chính', 0),
+(6, 'Bộ phận vệ sinh', 0),
+(7, 'Quản lý nhà hàng', 1),
+(8, 'Nhân viên lễ tân', 1),
+(9, 'Nhân viên phục vụ', 1),
+(10, 'Nhân viên order', 1),
+(11, 'Quản lý bếp', 2),
+(12, 'Bếp trưởng', 2),
+(13, 'Đầu bếp', 2),
+(14, 'Phụ bếp', 2),
+(15, 'Nhân viên mua hàng', 4),
+(16, 'Nhân viên giao hàng, chở hàng', 4),
+(17, 'Nhân viên thủ kho', 4),
+(18, 'Nhân viên thu ngân', 5),
+(19, 'Quản lý nhân sự', 5),
+(20, 'Kế toán', 5),
+(21, 'Bộ phận quản lý website', 0),
+(22, 'Nhân viên trực máy', 21),
+(23, 'Nhân viên quản trị web', 21),
+(24, 'Nhân viên vệ sinh', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `employee`
+--
+
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `wage` int(11) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `birthday` varchar(10) NOT NULL,
+  `start_date` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `employee`
+--
+
+INSERT INTO `employee` (`id`, `name`, `department_id`, `wage`, `phone`, `address`, `birthday`, `start_date`) VALUES
+(1, 'Nguyễn Đức Bình', 11, 10000000, '0984787003', '', '01-06-1993', '16-08-2017'),
+(2, 'Nguyễn Vân Anh', 19, 10000000, '01666537321', '', '16-11-1985', '09-08-2016'),
+(3, 'Nguyễn Thanh Tùng', 23, 10000000, '0166622390', 'Số 26, 164 Nguyễn Lân, Thanh Xuân, Hà Nội', '13-10-1993', '13-06-2017'),
+(4, 'Phạm Văn Trường', 17, 7000000, '0964777235', '19 Đại Từ, Hoàng Mai, Hà Nội', '16-10-1981', '11-08-2017'),
+(5, 'Trần Trung Hiếu', 16, 7000000, '0123456789', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', '18-11-1990', '05-07-2017'),
+(6, 'Vũ Văn Nguyên', 12, 15000000, '01637984321', 'Trường Chinh, Hà Nội', '26-02-1986', '17-11-2016'),
+(7, 'Lê Tuấn Hải', 14, 7000000, '0946735866', 'Giải Phóng, Hà Nội', '15-05-1990', '07-06-2017'),
+(8, 'Phan Văn Long', 13, 10000000, '0946454365', 'Đại La, Hà Nội', '03-08-1988', '04-07-2017'),
+(9, 'Lê Thị Hằng', 10, 8000000, '0164946723', 'Đại La, Hà Nội', '04-07-1995', '12-07-2017'),
+(10, 'Bùi Thị Thúy', 9, 5000000, '0946145458', 'Phương Mai, Hà Nội', '19-06-1996', '17-11-2017'),
+(11, 'Nguyễn Thúy Anh', 8, 7000000, '01665489956', 'Tam Trinh, Hoàng Mai, Hà Nội', '03-02-1993', '14-06-2017'),
+(12, 'Nguyễn Thị Thuận', 7, 12000000, '0123456789', 'Minh Khai, Hai Bà Trưng, Hà Nội', '17-11-1988', '10-07-2017'),
+(13, 'Nguyễn Thị Hà', 15, 7000000, '0164946723', 'Thái Hà, Hà Nội', '14-08-1984', '30-08-2017'),
+(14, 'Phạm Thu Huyền', 18, 8000000, '0946735866', 'Bạch Mai, Hai Bà Trưng, Hà Nội', '17-08-1993', '06-09-2017'),
+(15, 'Lê Thị Vân', 20, 10000000, '0964777235', 'Lĩnh Nam, Hoàng Mai, Hà Nội', '17-11-1988', '06-09-2017'),
+(16, 'Trần Văn Huy', 22, 6000000, '0964777235', 'Lê Thanh Nghị, Hai Bà Trưng, Hà Nội', '14-09-1992', '06-09-2017'),
+(17, 'Nguyễn Thị Thu', 24, 5000000, '01637984321', 'Minh Khai, Hai Bà Trưng, Hà Nội', '04-11-1984', '15-06-2016');
 
 -- --------------------------------------------------------
 
@@ -307,6 +364,31 @@ INSERT INTO `sale` (`id`, `title`, `img`, `start`, `end`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `fullname` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `create_time` int(11) NOT NULL,
+  `create_by` int(11) NOT NULL,
+  `role` tinyint(2) NOT NULL,
+  `department_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `fullname`, `create_time`, `create_by`, `role`, `department_id`) VALUES
+(1, 'admin', '5c5ca2ca10bd5d843628909e166609fe', 'Admin', 1493721361, 1, 1, 0),
+(2, 'admin_sgc', '5c5ca2ca10bd5d843628909e166609fe', 'Admin SGC', 1494310891, 1, 1, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `warehouse`
 --
 
@@ -350,12 +432,6 @@ CREATE TABLE `_table` (
 --
 
 --
--- Chỉ mục cho bảng `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Chỉ mục cho bảng `bill`
 --
 ALTER TABLE `bill`
@@ -371,6 +447,18 @@ ALTER TABLE `catalog`
 -- Chỉ mục cho bảng `content`
 --
 ALTER TABLE `content`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `department`
+--
+ALTER TABLE `department`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `employee`
+--
+ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -404,6 +492,12 @@ ALTER TABLE `sale`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
@@ -426,12 +520,6 @@ ALTER TABLE `_table`
 --
 
 --
--- AUTO_INCREMENT cho bảng `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT cho bảng `bill`
 --
 ALTER TABLE `bill`
@@ -450,6 +538,18 @@ ALTER TABLE `content`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT cho bảng `department`
+--
+ALTER TABLE `department`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT cho bảng `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT cho bảng `food`
 --
 ALTER TABLE `food`
@@ -465,7 +565,7 @@ ALTER TABLE `import`
 -- AUTO_INCREMENT cho bảng `ingredients`
 --
 ALTER TABLE `ingredients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `product`
@@ -478,6 +578,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `sale`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `warehouse`

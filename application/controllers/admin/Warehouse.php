@@ -4,7 +4,7 @@ Class Warehouse extends MY_Controller {
         parent::__construct();
         $this->load->model('warehouse_model');
         $this->load->model('food_model');
-        $this->load->model('admin_model');
+        $this->load->model('user_model');
     }
 
     function index() {
@@ -28,7 +28,7 @@ Class Warehouse extends MY_Controller {
                 'food_id' => $id,
                 'quantity'=> $quantity,
                 'price'=> $this->input->post('txtPrice'),
-                'create_by'=> $this->data['admin']->id,
+                'create_by'=> $this->data['Employee']->id,
                 'created'=> $now->getTimestamp(),
             );
             if($this->warehouse_model->create($data)){

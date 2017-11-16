@@ -31,15 +31,15 @@ Class Login extends MY_Controller {
         $password = $this->input->post('password');
         $password = md5($password);
         
-        $this->load->model('admin_model');
+        $this->load->model('user_model');
         $where = array('username' => $username , 'password' => $password);
-        if($this->admin_model->check_exists($where))
+        if($this->user_model->check_exists($where))
         {
-            $this->load->model('admin_model');
+            $this->load->model('user_model');
             $input = array();
             $input['where']['username'] = $username;
-            $admin = $this->admin_model->get_list($input)[0];
-            $this->session->set_userdata('admin', $admin);
+            $admin = $this->user_model->get_list($input)[0];
+            $this->session->set_userdata('Employee', $admin);
             //pre($admin);
             return true;
         }
