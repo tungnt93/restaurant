@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2017 lúc 06:32 PM
--- Phiên bản máy phục vụ: 10.1.26-MariaDB
--- Phiên bản PHP: 7.0.23
+-- Thời gian đã tạo: Th10 17, 2017 lúc 11:32 AM
+-- Phiên bản máy phục vụ: 10.1.25-MariaDB
+-- Phiên bản PHP: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -89,6 +89,20 @@ CREATE TABLE `content` (
 
 INSERT INTO `content` (`id`, `company_name`, `address`, `email`, `phone`, `intro`, `facebook`, `google`, `twitter`, `youtube`, `logo`, `slider`, `view`) VALUES
 (1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3841-1400-11/2017-249-2-17/11/2017-0');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `day_of_month`
+--
+
+CREATE TABLE `day_of_month` (
+  `id` int(11) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `date` int(11) NOT NULL,
+  `month_id` int(11) NOT NULL,
+  `working_time` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -216,11 +230,11 @@ CREATE TABLE `import` (
 --
 
 INSERT INTO `import` (`id`, `food_id`, `quantity`, `price`, `create_by`, `created`) VALUES
-(1, 2, 10, 60000, 1, 1510586913),
-(2, 1, 10, 250000, 1, 1510587317),
-(3, 2, 5, 60000, 1, 1510587682),
-(4, 3, 5, 15000, 1, 1510588782),
-(5, 4, 6, 150000, 1, 1510588950);
+(1, 2, 10, 60000, 4, 1510586913),
+(2, 1, 10, 250000, 4, 1510587317),
+(3, 2, 5, 60000, 4, 1510587682),
+(4, 3, 5, 15000, 4, 1510588782),
+(5, 4, 6, 150000, 4, 1510588950);
 
 -- --------------------------------------------------------
 
@@ -242,6 +256,21 @@ CREATE TABLE `ingredients` (
 INSERT INTO `ingredients` (`id`, `food_id`, `product_id`, `weigh`) VALUES
 (5, 5, 72, 0.5),
 (12, 5, 73, 0.5);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `month`
+--
+
+CREATE TABLE `month` (
+  `id` int(11) NOT NULL,
+  `month_name` varchar(40) NOT NULL,
+  `start_date` int(11) NOT NULL,
+  `end_date` int(11) NOT NULL,
+  `start_day` varchar(10) NOT NULL,
+  `day_off` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -364,6 +393,19 @@ INSERT INTO `sale` (`id`, `title`, `img`, `start`, `end`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `timesheets`
+--
+
+CREATE TABLE `timesheets` (
+  `id` int(11) NOT NULL,
+  `month_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `working_times` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `user`
 --
 
@@ -371,20 +413,36 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `fullname` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `role` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL,
   `create_time` int(11) NOT NULL,
-  `create_by` int(11) NOT NULL,
-  `role` tinyint(2) NOT NULL,
-  `department_id` int(11) NOT NULL
+  `create_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `fullname`, `create_time`, `create_by`, `role`, `department_id`) VALUES
-(1, 'admin', '5c5ca2ca10bd5d843628909e166609fe', 'Admin', 1493721361, 1, 1, 0),
-(2, 'admin_sgc', '5c5ca2ca10bd5d843628909e166609fe', 'Admin SGC', 1494310891, 1, 1, 0);
+INSERT INTO `user` (`id`, `username`, `password`, `employee_id`, `role`, `status`, `create_time`, `create_by`) VALUES
+(1, 'admin', '5c5ca2ca10bd5d843628909e166609fe', 0, 1, 1, 1493721361, 1),
+(2, 'admin_sgc', '5c5ca2ca10bd5d843628909e166609fe', 0, 1, 1, 1494310891, 1),
+(3, 'tungnt', '202cb962ac59075b964b07152d234b70', 3, 2, 1, 1510900370, 1),
+(4, 'huytv', '202cb962ac59075b964b07152d234b70', 16, 2, 1, 1510900819, 1),
+(5, 'anhnv', '202cb962ac59075b964b07152d234b70', 2, 2, 1, 1510902856, 1),
+(6, 'huyenpt', '202cb962ac59075b964b07152d234b70', 14, 2, 1, 1510902852, 1),
+(7, 'vanlt', '202cb962ac59075b964b07152d234b70', 15, 2, 1, 1510902848, 1),
+(8, 'truongpv', '202cb962ac59075b964b07152d234b70', 4, 2, 1, 1510902844, 1),
+(9, 'hieutt', '202cb962ac59075b964b07152d234b70', 5, 2, 1, 1510902840, 1),
+(10, 'hant', '202cb962ac59075b964b07152d234b70', 13, 2, 1, 1510902836, 1),
+(11, 'binhnd', '202cb962ac59075b964b07152d234b70', 1, 1, 1, 1510902830, 1),
+(12, 'hanglt', '202cb962ac59075b964b07152d234b70', 9, 2, 1, 1510902826, 1),
+(13, 'thuybt', '202cb962ac59075b964b07152d234b70', 10, 2, 1, 1510902822, 1),
+(14, 'anhnt', '202cb962ac59075b964b07152d234b70', 11, 2, 1, 1510902818, 1),
+(15, 'thuant', '202cb962ac59075b964b07152d234b70', 12, 2, 1, 1510902815, 1),
+(16, 'nguyenvv', '202cb962ac59075b964b07152d234b70', 6, 2, 1, 1510902811, 1),
+(17, 'hailt', '202cb962ac59075b964b07152d234b70', 7, 2, 1, 1510902807, 1),
+(18, 'longpv', '202cb962ac59075b964b07152d234b70', 8, 2, 1, 1510902803, 1);
 
 -- --------------------------------------------------------
 
@@ -480,6 +538,12 @@ ALTER TABLE `ingredients`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `month`
+--
+ALTER TABLE `month`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `product`
 --
 ALTER TABLE `product`
@@ -524,85 +588,76 @@ ALTER TABLE `_table`
 --
 ALTER TABLE `bill`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `catalog`
 --
 ALTER TABLE `catalog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
 --
 -- AUTO_INCREMENT cho bảng `content`
 --
 ALTER TABLE `content`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT cho bảng `department`
 --
 ALTER TABLE `department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
 --
 -- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
 --
 -- AUTO_INCREMENT cho bảng `food`
 --
 ALTER TABLE `food`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT cho bảng `import`
 --
 ALTER TABLE `import`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT cho bảng `ingredients`
 --
 ALTER TABLE `ingredients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+--
+-- AUTO_INCREMENT cho bảng `month`
+--
+ALTER TABLE `month`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
-
 --
 -- AUTO_INCREMENT cho bảng `sale`
 --
 ALTER TABLE `sale`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `_order`
 --
 ALTER TABLE `_order`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `_table`
 --
 ALTER TABLE `_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
