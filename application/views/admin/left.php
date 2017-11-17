@@ -13,7 +13,10 @@
               </div>
               <div class="profile_info">
                 <span>Xin chào,</span>
-                <h2><?php echo $admin->fullname ?></h2>
+                <h2>
+                    <?php echo $admin->employee_id == 0 ? $admin->username :
+                        $this->employee_model->get_info($admin->employee_id)->name ?>
+                </h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -48,7 +51,13 @@
                       <li><a href="<?php echo admin_url('content/slider')?>">Slide</a></li>
                     </ul>
                   </li>
-                  <li><a href="<?php echo admin_url('employee')?>"><i class="fa fa-users" aria-hidden="true"></i> Quản lý nhân sự <!-- <span class="fa fa-chevron-down"></span> --></a></li>
+                  <li><a><i class="fa fa-users" aria-hidden="true"></i>
+                          Quản lý nhân sự <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                          <li><a href="<?php echo admin_url('employee')?>">Danh sách nhân sự</a></li>
+                          <li><a href="<?php echo admin_url('timesheets')?>">Bảng chấm công</a></li>
+                      </ul>
+                  </li>
                   <li><a href="<?php echo admin_url('user')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> Tài khoản <!-- <span class="fa fa-chevron-down"></span> --></a></li>
                 </ul>
               </div>

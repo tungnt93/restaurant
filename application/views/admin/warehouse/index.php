@@ -40,7 +40,7 @@
 			            <td><?php echo $value->quantity.' '.$food->dram ?></td>
 			            <td><?php echo $value->price ?>đ</td>
 			            <td><?php echo date('H:i d/m/Y',$value->created)?></td>
-			            <td><?php echo $this->user_model->get_info($value->create_by)->fullname?></td>
+			            <td><?php echo $this->employee_model->get_info($value->create_by)->name?></td>
 			            <td>
 			            	<a href="<?php echo admin_url('warehouse/edit/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
 			            	<a onclick="delCatalog(<?php echo $value->id?>)" class="btn btn-xs btn-danger">Xóa</a>

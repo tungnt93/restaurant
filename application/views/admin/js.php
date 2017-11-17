@@ -58,26 +58,56 @@
 <script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+<!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>-->
+<!--<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>-->
+<!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />-->
 <script>
     $(document).ready(function() {
-        $('#txtBirthday').daterangepicker({
+//        $('#txtBirthday').daterangepicker({
+//            singleDatePicker: true,
+//            calender_style: "picker_4",
+//            locale: {
+//                format: 'DD-MM-YYYY'
+//            }
+//        }, function(start, end, label) {
+//            console.log(start.toISOString(), end.toISOString(), label);
+//        });
+
+//        $('#txtStartDate').daterangepicker({
+//            singleDatePicker: true,
+//            calender_style: "picker_4",
+//            locale: {
+//                format: 'DD-MM-YYYY'
+//            }
+//        }, function(start, end, label) {
+//            console.log(start.toISOString(), end.toISOString(), label);
+//        });
+
+        $('input[name="txtBirthday"]').daterangepicker({
             singleDatePicker: true,
-            calender_style: "picker_4",
-            locale: {
-                format: 'DD-MM-YYYY'
-            }
-        }, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
+            showDropdowns: true,
+            format: 'DD-MM-YYYY'
+        }).on('hide.daterangepicker', function (ev, picker) {
+            $('.table-condensed tbody tr:nth-child(2) td').click();
+            picker.startDate.format('DD-MM-YYYY');
         });
 
-        $('#txtStartDate').daterangepicker({
+        $('input[name="txtStartDate"]').daterangepicker({
             singleDatePicker: true,
-            calender_style: "picker_4",
-            locale: {
-                format: 'DD-MM-YYYY'
-            }
-        }, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
+            showDropdowns: true,
+            format: 'DD-MM-YYYY'
+        }).on('hide.daterangepicker', function (ev, picker) {
+            $('.table-condensed tbody tr:nth-child(2) td').click();
+            picker.startDate.format('DD-MM-YYYY');
+        });
+
+        $('input[name="txtMonth"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            format: 'MM/YYYY'
+        }).on('hide.daterangepicker', function (ev, picker) {
+            $('.table-condensed tbody tr:nth-child(2) td').click();
+            picker.startDate.format('MM/YYYY');
         });
     });
 </script>

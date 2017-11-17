@@ -39,7 +39,7 @@ Class Login extends MY_Controller {
             $input = array();
             $input['where']['username'] = $username;
             $admin = $this->user_model->get_list($input)[0];
-            $this->session->set_userdata('Employee', $admin);
+            $this->session->set_userdata('admin', $admin);
             //pre($admin);
             return true;
         }

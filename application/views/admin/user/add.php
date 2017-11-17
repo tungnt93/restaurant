@@ -1,7 +1,7 @@
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
 
 <div class="page-title">
-	<div class="title_left"><h3>Thêm nhân viên mới</h3></div>
+	<div class="title_left"><h3>Thêm tài khoản mới</h3></div>
 	<div class="title_right">
 		<div class="col-md-5 col-sm-5 col-xs-12 pull-right">
 			<a href="<?php echo admin_url('user/add')?>" class="btn btn-primary btn-sm">Thêm mới</a>
@@ -15,7 +15,16 @@
 		<div class="form-group">
         	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Họ tên <span class="required">*</span></label>
         	<div class="col-md-4 col-sm-4 col-xs-12">
-          		<input type="text" id="txtName" name="txtName" value="" required="required" class="form-control col-md-7 col-xs-12">
+                <select class="select2_multiple form-control" name="employee_id" id="department">
+                    <?php if($admin->role == 1){ ?><option value="0" ></option> <?php } ?>
+                    <?php foreach ($department as $row) { ?>
+                        <optgroup label="<?php echo $row->name?>">
+                            <?php foreach ($row->user as $r){ ?>
+                                <option value="<?php echo $r->id?>" ><?php echo $r->name?></option>
+                            <?php }?>
+                        </optgroup>
+                    <?php } ?>
+                </select>
         	</div>
       	</div>
       	<div class="form-group">
@@ -34,20 +43,6 @@
         	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Nhập lại password <span class="required">*</span></label>
         	<div class="col-md-4 col-sm-4 col-xs-12">
           		<input type="password" id="txtRePassword" name="txtRePassword" value="" required="required" class="form-control col-md-7 col-xs-12">
-        	</div>
-      	</div>
-      	<div class="form-group">
-        	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Vị trí<span class="required">*</span></label>
-        	<div class="col-md-4 col-sm-4 col-xs-12">
-                <select class="select2_multiple form-control" name="department" id="department">
-                    <?php foreach ($department as $row) { ?>
-                        <optgroup label="<?php echo $row->name?>">
-                            <?php foreach ($row->child as $r){ ?>
-                                <option value="<?php echo $r->id?>" ><?php echo $r->name?></option>
-                            <?php }?>
-                        </optgroup>
-                    <?php } ?>
-                </select>
         	</div>
       	</div>
       	<div class="form-group">

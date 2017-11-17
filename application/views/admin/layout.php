@@ -20,7 +20,9 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<?php echo admin_theme()?>production/images/user.png" alt=""><?php echo $admin->fullname ?>
+                    <img src="<?php echo admin_theme()?>production/images/user.png" alt="">
+                      <?php echo $admin->employee_id == 0 ? $admin->username :
+                          $this->employee_model->get_info($admin->employee_id)->name ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

@@ -24,13 +24,49 @@
 		    <div class="form-group">
 		      <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Họ tên <span class="required">*</span></label>
 		      <div class="col-md-4 col-sm-4 col-xs-12">
-		          <input type="text" id="txtName" name="txtName" value="<?php echo $admin->fullname ?>" required="required" class="form-control col-md-7 col-xs-12">
+                  <label class="control-label">
+                  <?php echo $admin->employee_id == 0 ? $admin->username :
+                      $this->employee_model->get_info($admin->employee_id)->name ?>
+                  </label>
 		      </div>
 		    </div>
+              <div class="form-group">
+                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Vị trí <span class="required">*</span></label>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                      <label class="control-label">
+                          <?php echo $admin->employee_id > 0 ?
+                              $this->department_model->get_info($this->employee_model->get_info($admin->employee_id)->department_id)->name
+                              : 'Quản trị viên website'
+                          ?>
+                      </label>
+                  </div>
+              </div>
+              <?php if($admin->employee_id > 0){
+                  $employee = $this->employee_model->get_info($admin->employee_id);
+                  ?>
+                  <div class="form-group">
+                      <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Số điện thoại <span class="required">*</span></label>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                          <input type="text" id="txtPhone" name="txtPhone" value="<?php echo $employee->phone?>" required="required" class="form-control col-md-7 col-xs-12">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Địa chỉ <span class="required">*</span></label>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                          <input type="text" id="txtAddress" name="txtAddress" value="<?php echo $employee->address?>" required="required" class="form-control col-md-7 col-xs-12">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Ngày sinh <span class="required">*</span></label>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                          <input type="text" id="txtBirthday" name="txtBirthday" value="<?php echo $employee->birthday?>" required="required" class="form-control col-md-7 col-xs-12">
+                      </div>
+                  </div>
+              <?php } ?>
 		    <div class="form-group">
 		      <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Mật khẩu cũ <span class="required">*</span></label>
 		      <div class="col-md-4 col-sm-4 col-xs-12">
-		          <input type="password" id="txtOldPassword" name="txtOldPassword" required="required" class="form-control col-md-7 col-xs-12">
+		          <input type="password" id="txtOldPassword" name="txtOldPassword" class="form-control col-md-7 col-xs-12">
 		      </div>
 		    </div>
 		    <div class="form-group">
