@@ -21,9 +21,9 @@
     <div class="x_content">
         <?php foreach ($timesheets as $key => $value) {?>
             <div class="col-md-2 col-sm-3 col-xs-6" style="text-align: center">
-                <a href="#">
+                <a href="<?php echo admin_url('timesheets/detail/'.$value->id) ?>">
                     <img src="<?php echo public_url('images/timesheet.png')?>" style="max-width: 120px">
-                    <div>Bảng chấm công tháng <?php echo $value->month_id?></div>
+                    <div>Bảng chấm công tháng <?php echo $value->month_name?></div>
                 </a>
             </div>
         <?php }?>

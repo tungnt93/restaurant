@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 17, 2017 lúc 11:32 AM
+-- Thời gian đã tạo: Th10 18, 2017 lúc 05:23 AM
 -- Phiên bản máy phục vụ: 10.1.25-MariaDB
 -- Phiên bản PHP: 5.6.31
 
@@ -88,7 +88,7 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`id`, `company_name`, `address`, `email`, `phone`, `intro`, `facebook`, `google`, `twitter`, `youtube`, `logo`, `slider`, `view`) VALUES
-(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3841-1400-11/2017-249-2-17/11/2017-0');
+(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3841-1400-11/2017-249-0-18/11/2017-0');
 
 -- --------------------------------------------------------
 
@@ -159,31 +159,32 @@ CREATE TABLE `employee` (
   `phone` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `birthday` varchar(10) NOT NULL,
-  `start_date` varchar(10) NOT NULL
+  `start_date` varchar(10) NOT NULL,
+  `status` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `employee`
 --
 
-INSERT INTO `employee` (`id`, `name`, `department_id`, `wage`, `phone`, `address`, `birthday`, `start_date`) VALUES
-(1, 'Nguyễn Đức Bình', 11, 10000000, '0984787003', '', '01-06-1993', '16-08-2017'),
-(2, 'Nguyễn Vân Anh', 19, 10000000, '01666537321', '', '16-11-1985', '09-08-2016'),
-(3, 'Nguyễn Thanh Tùng', 23, 10000000, '0166622390', 'Số 26, 164 Nguyễn Lân, Thanh Xuân, Hà Nội', '13-10-1993', '13-06-2017'),
-(4, 'Phạm Văn Trường', 17, 7000000, '0964777235', '19 Đại Từ, Hoàng Mai, Hà Nội', '16-10-1981', '11-08-2017'),
-(5, 'Trần Trung Hiếu', 16, 7000000, '0123456789', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', '18-11-1990', '05-07-2017'),
-(6, 'Vũ Văn Nguyên', 12, 15000000, '01637984321', 'Trường Chinh, Hà Nội', '26-02-1986', '17-11-2016'),
-(7, 'Lê Tuấn Hải', 14, 7000000, '0946735866', 'Giải Phóng, Hà Nội', '15-05-1990', '07-06-2017'),
-(8, 'Phan Văn Long', 13, 10000000, '0946454365', 'Đại La, Hà Nội', '03-08-1988', '04-07-2017'),
-(9, 'Lê Thị Hằng', 10, 8000000, '0164946723', 'Đại La, Hà Nội', '04-07-1995', '12-07-2017'),
-(10, 'Bùi Thị Thúy', 9, 5000000, '0946145458', 'Phương Mai, Hà Nội', '19-06-1996', '17-11-2017'),
-(11, 'Nguyễn Thúy Anh', 8, 7000000, '01665489956', 'Tam Trinh, Hoàng Mai, Hà Nội', '03-02-1993', '14-06-2017'),
-(12, 'Nguyễn Thị Thuận', 7, 12000000, '0123456789', 'Minh Khai, Hai Bà Trưng, Hà Nội', '17-11-1988', '10-07-2017'),
-(13, 'Nguyễn Thị Hà', 15, 7000000, '0164946723', 'Thái Hà, Hà Nội', '14-08-1984', '30-08-2017'),
-(14, 'Phạm Thu Huyền', 18, 8000000, '0946735866', 'Bạch Mai, Hai Bà Trưng, Hà Nội', '17-08-1993', '06-09-2017'),
-(15, 'Lê Thị Vân', 20, 10000000, '0964777235', 'Lĩnh Nam, Hoàng Mai, Hà Nội', '17-11-1988', '06-09-2017'),
-(16, 'Trần Văn Huy', 22, 6000000, '0964777235', 'Lê Thanh Nghị, Hai Bà Trưng, Hà Nội', '14-09-1992', '06-09-2017'),
-(17, 'Nguyễn Thị Thu', 24, 5000000, '01637984321', 'Minh Khai, Hai Bà Trưng, Hà Nội', '04-11-1984', '15-06-2016');
+INSERT INTO `employee` (`id`, `name`, `department_id`, `wage`, `phone`, `address`, `birthday`, `start_date`, `status`) VALUES
+(1, 'Nguyễn Đức Bình', 11, 10000000, '0984787003', '', '01-06-1993', '16-08-2017', 1),
+(2, 'Nguyễn Vân Anh', 19, 10000000, '01666537321', '', '16-11-1985', '09-08-2016', 1),
+(3, 'Nguyễn Thanh Tùng', 23, 10000000, '0166622390', 'Số 26, 164 Nguyễn Lân, Thanh Xuân, Hà Nội', '13-10-1993', '13-06-2017', 1),
+(4, 'Phạm Văn Trường', 17, 7000000, '0964777235', '19 Đại Từ, Hoàng Mai, Hà Nội', '16-10-1981', '11-08-2017', 1),
+(5, 'Trần Trung Hiếu', 16, 7000000, '0123456789', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', '18-11-1990', '05-07-2017', 1),
+(6, 'Vũ Văn Nguyên', 12, 15000000, '01637984321', 'Trường Chinh, Hà Nội', '26-02-1986', '17-11-2016', 1),
+(7, 'Lê Tuấn Hải', 14, 7000000, '0946735866', 'Giải Phóng, Hà Nội', '15-05-1990', '07-06-2017', 1),
+(8, 'Phan Văn Long', 13, 10000000, '0946454365', 'Đại La, Hà Nội', '03-08-1988', '04-07-2017', 1),
+(9, 'Lê Thị Hằng', 10, 8000000, '0164946723', 'Đại La, Hà Nội', '04-07-1995', '12-07-2017', 1),
+(10, 'Bùi Thị Thúy', 9, 5000000, '0946145458', 'Phương Mai, Hà Nội', '19-06-1996', '17-11-2017', 1),
+(11, 'Nguyễn Thúy Anh', 8, 7000000, '01665489956', 'Tam Trinh, Hoàng Mai, Hà Nội', '03-02-1993', '14-06-2017', 1),
+(12, 'Nguyễn Thị Thuận', 7, 12000000, '0123456789', 'Minh Khai, Hai Bà Trưng, Hà Nội', '17-11-1988', '10-07-2017', 1),
+(13, 'Nguyễn Thị Hà', 15, 7000000, '0164946723', 'Thái Hà, Hà Nội', '14-08-1984', '30-08-2017', 1),
+(14, 'Phạm Thu Huyền', 18, 8000000, '0946735866', 'Bạch Mai, Hai Bà Trưng, Hà Nội', '17-08-1993', '06-09-2017', 1),
+(15, 'Lê Thị Vân', 20, 10000000, '0964777235', 'Lĩnh Nam, Hoàng Mai, Hà Nội', '17-11-1988', '06-09-2017', 1),
+(16, 'Trần Văn Huy', 22, 6000000, '0964777235', 'Lê Thanh Nghị, Hai Bà Trưng, Hà Nội', '14-09-1992', '06-09-2017', 1),
+(17, 'Nguyễn Thị Thu', 24, 5000000, '01637984321', 'Minh Khai, Hai Bà Trưng, Hà Nội', '04-11-1984', '15-06-2016', 1);
 
 -- --------------------------------------------------------
 
@@ -271,6 +272,14 @@ CREATE TABLE `month` (
   `start_day` varchar(10) NOT NULL,
   `day_off` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `month`
+--
+
+INSERT INTO `month` (`id`, `month_name`, `start_date`, `end_date`, `start_day`, `day_off`) VALUES
+(1, '10/2017', 1506790800, 1509382800, '7', 0),
+(2, '11/2017', 1509469200, 1511974800, '3', 0);
 
 -- --------------------------------------------------------
 
@@ -402,6 +411,46 @@ CREATE TABLE `timesheets` (
   `employee_id` int(11) NOT NULL,
   `working_times` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `timesheets`
+--
+
+INSERT INTO `timesheets` (`id`, `month_id`, `employee_id`, `working_times`) VALUES
+(1, 2, 17, '00000000000000000000000000000'),
+(2, 2, 16, '00000000000000000000000000000'),
+(3, 2, 15, '00000000000000000000000000000'),
+(4, 2, 14, '00000000000000000000000000000'),
+(5, 2, 13, '00000000000000000000000000000'),
+(6, 2, 12, '00000000000000000000000000000'),
+(7, 2, 11, '00000000000000000000000000000'),
+(8, 2, 10, '00000000000000000000000000000'),
+(9, 2, 9, '00000000000000000000000000000'),
+(10, 2, 8, '00000000000000000000000000000'),
+(11, 2, 7, '00000000000000000000000000000'),
+(12, 2, 6, '00000000000000000000000000000'),
+(13, 2, 5, '00000000000000000000000000000'),
+(14, 2, 4, '00000000000000000000000000000'),
+(15, 2, 3, '00000000000000000000000000000'),
+(16, 2, 2, '00000000000000000000000000000'),
+(17, 2, 1, '00000000000000000000000000000'),
+(18, 1, 17, '000000000000000000000000000000'),
+(19, 1, 16, '000000000000000000000000000000'),
+(20, 1, 15, '000000000000000000000000000000'),
+(21, 1, 14, '000000000000000000000000000000'),
+(22, 1, 13, '000000000000000000000000000000'),
+(23, 1, 12, '000000000000000000000000000000'),
+(24, 1, 11, '000000000000000000000000000000'),
+(25, 1, 10, '000000000000000000000000000000'),
+(26, 1, 9, '000000000000000000000000000000'),
+(27, 1, 8, '000000000000000000000000000000'),
+(28, 1, 7, '000000000000000000000000000000'),
+(29, 1, 6, '000000000000000000000000000000'),
+(30, 1, 5, '000000000000000000000000000000'),
+(31, 1, 4, '000000000000000000000000000000'),
+(32, 1, 3, '000000000000000000000000000000'),
+(33, 1, 2, '000000000000000000000000000000'),
+(34, 1, 1, '000000000000000000000000000000');
 
 -- --------------------------------------------------------
 
@@ -556,6 +605,12 @@ ALTER TABLE `sale`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `timesheets`
+--
+ALTER TABLE `timesheets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
@@ -627,7 +682,7 @@ ALTER TABLE `ingredients`
 -- AUTO_INCREMENT cho bảng `month`
 --
 ALTER TABLE `month`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
@@ -638,6 +693,11 @@ ALTER TABLE `product`
 --
 ALTER TABLE `sale`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT cho bảng `timesheets`
+--
+ALTER TABLE `timesheets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT cho bảng `user`
 --

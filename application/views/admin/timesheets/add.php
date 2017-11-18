@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2" style="width: 70px">
-                    <input type="submit" id="btnAddAdmin" name="btnAddAdmin" required="required" class="btn btn-success" value="Thêm">
+                    <input type="submit" id="btnAdd" name="btnAdd" required="required" class="btn btn-success" value="Thêm">
                 </div>
             </div>
         </form>

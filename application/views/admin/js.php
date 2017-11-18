@@ -87,18 +87,12 @@
             singleDatePicker: true,
             showDropdowns: true,
             format: 'DD-MM-YYYY'
-        }).on('hide.daterangepicker', function (ev, picker) {
-            $('.table-condensed tbody tr:nth-child(2) td').click();
-            picker.startDate.format('DD-MM-YYYY');
         });
 
         $('input[name="txtStartDate"]').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
             format: 'DD-MM-YYYY'
-        }).on('hide.daterangepicker', function (ev, picker) {
-            $('.table-condensed tbody tr:nth-child(2) td').click();
-            picker.startDate.format('DD-MM-YYYY');
         });
 
         $('input[name="txtMonth"]').daterangepicker({
