@@ -117,7 +117,7 @@ Class Timesheets extends MY_Controller {
             $timesheet_by_department[$department_parent]->timesheets[] = $timesheets[$key];
         }
 //        pre($timesheets);
-//        pre($timesheet_by_department);
+        pre($timesheet_by_department);
 
         $this->data['timesheet_by_department'] = $timesheet_by_department;
         $this->data['month'] = $month;

@@ -38,6 +38,9 @@
                     <td><?php echo 'T'.$i ?></td>
                 <?php }?>
             </tr>
+            <?php foreach ($timesheet_by_department as $row){ ?>
+
+            <?php }?>
             <tr>
                 <td>1</td>
                 <td>Nguyễn Thanh Tùng</td>
