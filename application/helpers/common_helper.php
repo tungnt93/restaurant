@@ -93,3 +93,7 @@ function phone_format($number){
     else
         return $number;
 }
+
+function money_fomart($money){
+
+}

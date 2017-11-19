@@ -14,7 +14,11 @@
 		<div class="form-group">
         	<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Tên món ăn <span class="required">*</span></label>
         	<div class="col-md-4 col-sm-4 col-xs-12">
-          		<input type="text" id="txtName" name="txtName" value="<?php echo isset($name) ? $name : ''?>" required="required" class="form-control col-md-7 col-xs-12">
+                <select class="select2_multiple form-control" name="product_id">
+                    <?php foreach ($products as $r) { ?>
+                        <option value="<?php echo $r->id ?>"><?php echo $r->name?></option>
+                    <?php } ?>
+                </select>
         	</div>
       	</div>
       	<div class="form-group">
@@ -47,31 +51,7 @@
               <img id="pre_img" style="width: 150px" />
         	</div>
       	</div>
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-4" for="first-name">Nguyên liệu<span class="required">*</span></label>
-            <div class="col-md-2 col-sm-2 col-xs-8">
-                <select class="select2_multiple form-control" name="slFood" id="slFood">
-                    <?php foreach ($foods as $row) { ?>
-                        <optgroup label="<?php echo $row->catalog?>">
-                            <?php foreach ($row->food as $food){ ?>
-                                <option value="<?php echo $food->id?>" ><?php echo $food->name?></option>
-                            <?php }?>
-                        </optgroup>
-                    <?php } ?>
-                </select>
-            </div>
-            <label class="control-label col-md-1 col-sm-1 col-xs-4" style="text-align: left;">Khối lượng</label>
-            <div class="col-md-1 col-sm-1 col-xs-8">
-                <input type="number" id="txtQuantity" name="txtQuantity" step="0.01" value="" class="form-control col-md-7 col-xs-12">
-            </div>
-            <div class="btn btn-default" id="btnAddIngredient">Thêm</div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2 col-sm-2 col-xs-12"></label>
-            <div class="col-md-6 col-sm-6 col-xs-12" id="list_nl" style="font-size: 18px">
 
-            </div>
-        </div>
 <!--        <div class="form-group">-->
 <!--          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mô tả sản phẩm <span class="required">*</span></label>-->
 <!--          <div class="col-md-8 col-sm-8 col-xs-12">-->

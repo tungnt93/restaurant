@@ -1,12 +1,12 @@
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
 <div class="page-title">
-	<div class="title_left"><h3>Món ăn</h3></div>
-	<div class="title_right">
-		<div class="col-md-9 col-sm-9 col-xs-12 pull-right">
-			<a href="<?php echo admin_url('product/add')?>" class="btn btn-primary btn-sm">Thêm mới</a>
-			<a href="<?php echo admin_url('product')?>" class="btn btn-info btn-sm">Danh sách</a>
-		</div>
-	</div>
+    <div class="title_left"><h3>Món ăn</h3></div>
+    <div class="title_right">
+        <div class="col-md-9 col-sm-9 col-xs-12 pull-right">
+            <a href="<?php echo admin_url('kitchen/add_product')?>" class="btn btn-primary btn-sm">Thêm mới</a>
+            <a href="<?php echo admin_url('kitchen/product')?>" class="btn btn-info btn-sm">Danh sách</a>
+        </div>
+    </div>
 </div>
 <div class="x_panel">
     <div class="x_title">
@@ -30,12 +30,11 @@
         <table id="datatable-product" class="table table-striped table-bordered bulk_action">
             <thead>
             <tr>
-                <th><input type="checkbox" id="check-all" class="flat"></th>
                 <th>Mã số</th>
                 <th>Tên món</th>
                 <th>Ảnh minh họa</th>
                 <th>Menu</th>
-                <th>Giá</th>
+                <th>Thực phẩm chính</th>
                 <th>Hành động</th>
             </tr>
             </thead>
@@ -43,18 +42,25 @@
             <tbody>
             <?php foreach ($list_product as $value): ?>
                 <tr>
-                    <td><input type="checkbox" id="check-all" class="flat"></td>
                     <td><?php echo $value->id?></td>
                     <td><?php echo $value->name?></td>
                     <td>
                         <?php if($value->img_link){ ?>
                             <img src="<?php echo public_url('images/product/'.$value->img_link)?>" style="max-width: 150px">
-                        <?php } else echo 'Chưa có ảnh minh họa';?>
+                        <?php }
+                        else echo 'Chưa có ảnh minh họa';
+                        ?>
                     </td>
                     <td><?php echo $this->catalog_model->get_info($value->catalog_id)->name?></td>
-                    <td><?php echo number_format($value->price)?>đ</td>
                     <td>
-                        <a href="<?php echo admin_url('product/edit/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
+                        <?php foreach ($value->ing as $ing){
+                            $food = $this->food_model->get_info($ing->food_id);
+                            ?>
+                            <div><?php echo $food->name?>: <?php echo $ing->weigh.$food->dram?></div>
+                        <?php }?>
+                    </td>
+                    <td>
+                        <a href="<?php echo admin_url('kitchen/edit_product/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
                         <a onclick="delCatalog(<?php echo $value->id?>)" class="btn btn-xs btn-danger">Xóa</a>
                     </td>
                 </tr>
@@ -67,12 +73,12 @@
 
 
 <style type="text/css">
-	td{
-		vertical-align: middle !important;
-	}
-	.action a{
-		font-size: 22px;
-		display: block;
-		cursor: pointer;
-	}
+    td{
+        vertical-align: middle !important;
+    }
+    .action a{
+        font-size: 22px;
+        display: block;
+        cursor: pointer;
+    }
 </style>

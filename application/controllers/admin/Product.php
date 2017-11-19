@@ -11,7 +11,6 @@ Class Product extends MY_Controller {
 	function index() {
 		$message = $this->session->flashdata('message');
 	    $this->data['message'] = $message;
-		
 	    $list_product = $this->product_model->get_list();
 	    $this->data['list_product'] = $list_product;
 		$this->data['temp'] = 'admin/product/index';
@@ -30,56 +29,49 @@ Class Product extends MY_Controller {
 		    $input['where']['catalog_id'] = $value->id;
 		    $foods[$key]->food = $this->food_model->get_list($input);
         }
+        $input = array();
+        $input['where']['status'] = 0;
+        $products = $this->product_model->get_list($input);
+        $this->data['products'] = $products;
 
 		if($this->input->post('btnAddProduct')){
-			$name = $this->input->post('txtName');
+			$product_id = $this->input->post('product_id');
 			$catalog_id = $this->input->post('slCatalog');
 			$price = $this->input->post('txtPrice');
 			$discount = $this->input->post('txtDiscount');
 			$now = new DateTime();
 			$now = $now->getTimestamp();
-            $nl = $this->ingredients_model->get_total(array('where'=>array('product_id'=>0)));
-            if($nl > 0){
-                //upload images
-                $config['upload_path'] = './public/images/product';
-                $config['allowed_types'] = 'gif|jpg|png';
-                $this->load->library("upload", $config);
-                if($this->upload->do_upload('imageProduct')){
-                    $img_data = $this->upload->data();
-                    $img = $img_data['file_name'];
-                    $dataSubmit = array(
-                        'name'			=> $name,
-                        'catalog_id'	=> $catalog_id,
-                        'price'			=> $price,
-                        'discount'		=> $discount,
-                        'img_link'		=> $img,
-                        'view'			=> 0,
-                        'create_time' 	=> $now
-                    );
-                    $product_id = $this->product_model->create($dataSubmit);
-                    if($product_id > 0){
-                        $this->session->set_flashdata('message', 'Thêm món ăn thành công!');
-                        $update_nl = array('product_id'=>$product_id);
-                        $this->ingredients_model->update_rule(array('product_id'=> 0), $update_nl);
-                        redirect(base_url('admin/product'));
-                    }
-                    else{
-                        $this->session->set_flashdata('message', 'Thêm món ăn thất bại!');
-                        redirect(base_url('admin/product'));
-                    }
 
-                }else{
-                    $this->session->set_flashdata('message', $this->upload->display_errors());
-                    redirect(base_url('admin/product/add'));
+            //upload images
+            $config['upload_path'] = './public/images/product';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $this->load->library("upload", $config);
+            if($this->upload->do_upload('imageProduct')){
+                $img_data = $this->upload->data();
+                $img = $img_data['file_name'];
+                $dataSubmit = array(
+                    'catalog_id'	=> $catalog_id,
+                    'price'			=> $price,
+                    'discount'		=> $discount,
+                    'img_link'		=> $img,
+                    'create_time' 	=> $now,
+                    'status'        => 1
+                );
+                $product_id = $this->product_model->update($product_id, $dataSubmit);
+                if($product_id > 0){
+                    $this->session->set_flashdata('message', 'Thêm món ăn thành công!');
+                    $update_nl = array('product_id'=>$product_id);
+                    $this->ingredients_model->update_rule(array('product_id'=> 0), $update_nl);
+                    redirect(base_url('admin/product'));
                 }
-            }
-            else {
-//                $this->session->set_flashdata('message', 'Bạn chưa thêm Nguyên liệu!');
-                $this->data['name'] = $name;
-                $this->data['catalog_id'] = $catalog_id;
-                $this->data['price'] = $price;
-                $this->data['discount'] = $discount;
-                $this->data['message'] = 'Bạn chưa thêm Nguyên liệu!';
+                else{
+                    $this->session->set_flashdata('message', 'Thêm món ăn thất bại!');
+                    redirect(base_url('admin/product'));
+                }
+
+            }else{
+                $this->session->set_flashdata('message', $this->upload->display_errors());
+                redirect(base_url('admin/product/add'));
             }
 		}
         $this->ingredients_model->del_rule(array('product_id'=> 0));

@@ -15,6 +15,7 @@ Class Timesheets extends MY_Controller {
 
         $timesheets = $this->month_model->get_list();
         $this->data['timesheets'] = $timesheets;
+//        pre($timesheets);
 
         $this->data['temp'] = 'admin/timesheets/index';
         $this->load->view('admin/layout', $this->data);
@@ -54,8 +55,8 @@ Class Timesheets extends MY_Controller {
                 $arr = explode('/', $month);
                 $total_day_of_month = cal_days_in_month(CAL_GREGORIAN, $arr[0], $arr[1]);
                 $working_times = '';
-                for ($i = 1; $i < $total_day_of_month; $i++){
-                    $working_times = $working_times.'0';
+                for ($i = 0; $i < $total_day_of_month; $i++){
+                    $working_times = $working_times.'2';
                 }
                 $input = array();
                 $input['where']['status'] = 1;
@@ -97,7 +98,6 @@ Class Timesheets extends MY_Controller {
 
         $input = array();
         $input['where']['month_id'] = $month_id;
-//        $input['order'] = array('id','DESC');
         $timesheets = $this->timesheets_model->get_list($input);
 
         $timesheet_by_department = [];
@@ -117,11 +117,41 @@ Class Timesheets extends MY_Controller {
             $timesheet_by_department[$department_parent]->timesheets[] = $timesheets[$key];
         }
 //        pre($timesheets);
-        pre($timesheet_by_department);
+//        pre($timesheet_by_department);
 
         $this->data['timesheet_by_department'] = $timesheet_by_department;
         $this->data['month'] = $month;
         $this->data['temp'] = 'admin/timesheets/detail';
         $this->load->view('admin/layout', $this->data);
+    }
+
+    function update(){
+        $month_id = $this->input->post('month_id');
+        $employee_id = $this->input->post('employee_id');
+        $working = $this->input->post('working_times');
+        $day_index = $this->input->post('day_index');
+
+        $input = array();
+        $input['where'] = array(
+            'month_id' => $month_id,
+            'employee_id' => $employee_id
+        );
+        $timesheet = $this->timesheets_model->get_list($input)[0];
+        $working_times = $timesheet->working_times;
+        $working_times[$day_index] = $working;
+        $dataUpdate = array('working_times'=>$working_times);
+        if($this->timesheets_model->update($timesheet->id, $dataUpdate)){
+            $len = strlen($working_times);
+            $total = 0;
+            for ($i = 0; $i < $len; $i++){
+                $total += $working_times[$i];
+            }
+            echo json_encode(array('working_times'=>$working, 'total'=>$total/2));
+        }
+        else{
+            echo 0;
+        }
+
+
     }
 }

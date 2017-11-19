@@ -5,6 +5,14 @@
   </head>
 
   <body class="nav-md">
+    <div id="loading" style="width: 100%; height: 100%; position: fixed; background-color: rgba(0,0,0,0.8); z-index: 10;display: none">
+        <div style="margin: 250px auto; width: 300px">
+            <div style="font-size: 20px; color: #fff; margin: 10px auto; text-align: center">Đang lưu</div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
+            </div>
+        </div>
+    </div>
     <div class="container body">
       <div class="main_container">
         <?php $this->load->view('admin/left'); ?>
@@ -112,7 +120,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Thiết kế bởi SGC
+            Thiết kế bởi Tungnt
           </div>
           <div class="clearfix"></div>
         </footer>

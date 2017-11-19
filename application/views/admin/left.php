@@ -28,37 +28,48 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                  <li><a href="<?php echo admin_url('report')?>"><i class="fa fa-home" aria-hidden="true"></i></i> Tổng quan</a></li>
-                  <li><a><i class="fa fa-product-hunt" aria-hidden="true"></i> Món ăn <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="<?php echo admin_url('product')?>"> Món ăn</a></li>
-                      <li><a href="<?php echo admin_url('catalog')?>"> Thực đơn</a></li>
-                    </ul>
-                  </li>
-                    <li>
-                        <a><i class="fa fa-shopping-basket" aria-hidden="true"></i> Kho thực phẩm <span class="fa fa-chevron-down"></span></a>
+                    <li><a href="<?php echo admin_url('report')?>"><i class="fa fa-home" aria-hidden="true"></i></i> Tổng quan</a></li>
+                    <li><a><i class="fa fa-users" aria-hidden="true"></i>Quản lý nhân sự <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?php echo admin_url('warehouse')?>">Nhập kho</a></li>
-                            <li><a href="<?php echo admin_url('food')?>">Thực phẩm</a></li>
+                            <li><a href="<?php echo admin_url('employee')?>">Danh sách nhân sự</a></li>
+                            <li><a href="<?php echo admin_url('timesheets')?>">Bảng chấm công</a></li>
+                            <li><a href="<?php echo admin_url('payroll')?>">Bảng lương</a></li>
                         </ul>
                     </li>
-                  <li><a><i class="fa fa-file-text-o" aria-hidden="true"></i> Liên hệ, giới thiệu<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="<?php echo admin_url('content/info')?>">Thông tin công ty</a></li>
-                      <li><a href="<?php echo admin_url('content/social')?>">Liên kết mạng xã hội</a></li>
-                      <li><a href="<?php echo admin_url('content/intro')?>"> Giới thiệu</a></li>
-                      <li><a href="<?php echo admin_url('content/logo')?>">Logo</a></li>
-                      <li><a href="<?php echo admin_url('content/slider')?>">Slide</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-users" aria-hidden="true"></i>
-                          Quản lý nhân sự <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu">
-                          <li><a href="<?php echo admin_url('employee')?>">Danh sách nhân sự</a></li>
-                          <li><a href="<?php echo admin_url('timesheets')?>">Bảng chấm công</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="<?php echo admin_url('user')?>"><i class="fa fa-sign-in" aria-hidden="true"></i> Tài khoản <!-- <span class="fa fa-chevron-down"></span> --></a></li>
+                    <li>
+                        <a><i class="fa fa-shopping-basket" aria-hidden="true"></i> Quản lý kho <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('warehouse')?>">Nhập kho</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-fire" aria-hidden="true"></i>Quản lý bếp <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('food')?>">Thực phẩm</a></li>
+                            <li><a href="<?php echo admin_url('kitchen/product')?>">Xây dựng thực đơn</a></li>
+                            <li><a href="<?php echo admin_url('kitchen/daily_menu')?>">Thực đơn hàng ngày</a></li>
+                            <li><a href="<?php echo admin_url('timesheets')?>">Dụng cụ nhà bếp</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-file-text-o" aria-hidden="true"></i> Quản lý website<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a>Món ăn <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="<?php echo admin_url('product')?>"> Món ăn</a></li>
+                                    <li><a href="<?php echo admin_url('catalog')?>"> Phân loại</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="<?php echo admin_url('user')?>">Tài khoản</a></li>
+                            <li><a>Thông tin, liên hệ <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="<?php echo admin_url('content/info')?>">Thông tin công ty</a></li>
+                                    <li><a href="<?php echo admin_url('content/social')?>">Liên kết mạng xã hội</a></li>
+                                    <li><a href="<?php echo admin_url('content/intro')?>"> Giới thiệu</a></li>
+                                    <li><a href="<?php echo admin_url('content/logo')?>">Logo</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="<?php echo admin_url('content/slider')?>">Slide</a></li>
+                        </ul>
+                    </li>
                 </ul>
               </div>
 

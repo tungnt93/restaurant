@@ -1,5 +1,7 @@
 <!-- jQuery -->
 <script src="<?php echo admin_theme()?>vendors/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Bootstrap -->
 <script src="<?php echo admin_theme()?>vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?php echo admin_theme()?>src/js/my.js"></script>
@@ -63,6 +65,7 @@
 <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />-->
 <script>
     $(document).ready(function() {
+
 //        $('#txtBirthday').daterangepicker({
 //            singleDatePicker: true,
 //            calender_style: "picker_4",
@@ -95,6 +98,12 @@
             format: 'DD-MM-YYYY'
         });
 
+//        $('#txtDate').daterangepicker({
+//            singleDatePicker: true,
+//            showDropdowns: true,
+//            format: 'DD-MM-YYYY'
+//        });
+
         $('input[name="txtMonth"]').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
@@ -103,5 +112,21 @@
             $('.table-condensed tbody tr:nth-child(2) td').click();
             picker.startDate.format('MM/YYYY');
         });
+
+        $( function() {
+            $('#txtDate').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-mm-yy',
+            });
+            $('#txtDateCopy').datepicker( {
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-mm-yy',
+            });
+        });
+
     });
 </script>
+
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>

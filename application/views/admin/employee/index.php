@@ -54,6 +54,7 @@
                         <td><?php echo $value->wage?></td>
                         <td><?php echo $value->start_date ?></td>
                         <td style="text-align: center; width: 80px">
+                            <a class="btn btn-xs btn-primary" href="<?php echo admin_url('employee/edit/'.$value->id)?>">Sửa</a>
                             <a class="btn btn-xs btn-danger" onclick="del_admin(<?php echo $value->id?>)">Xóa</a>
                         </td>
 		          	</tr>
@@ -70,7 +71,7 @@
 </style>
 <script type="text/javascript">
 	function del_admin(id){
-		var r = confirm("Bạn có chắc chắn muốn xóa quản trị viên này?");
+		var r = confirm("Bạn có chắc chắn muốn xóa nhân viên này?");
 	    if (r == true) {
 	        window.location.href = "<?php echo admin_url('admin/del/')?>" + id;
 	    }
