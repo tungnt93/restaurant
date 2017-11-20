@@ -65,7 +65,7 @@
 <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />-->
 <script>
     $(document).ready(function() {
-
+//        $('#datatable-foods').DataTable();
 //        $('#txtBirthday').daterangepicker({
 //            singleDatePicker: true,
 //            calender_style: "picker_4",

@@ -259,5 +259,27 @@ Class Kitchen extends MY_Controller {
     function copyMenu(){
         $date = $this->input->post('date');
         $dateCopy = $this->input->post('dateCopy');
+        $input = array();
+        $input['where']['date'] = $dateCopy;
+        $daily_menus = $this->dailyMenu_model->get_list($input);
+        $now = new DateTime();
+        $created = $now->getTimestamp();
+        foreach ($daily_menus as $row){
+            $dataCreate = array(
+                'product_id'    => $row->product_id,
+                'quantity'      => $row->quantity,
+                'date'          => $date,
+                'create_by'     => $this->data['admin']->id,
+                'created'       => $created
+            );
+            $this->dailyMenu_model->create($dataCreate);
+        }
+        $daily_menus = $this->dailyMenu_model->get_list(array('where'=>array('date'=>$date)));
+        foreach ($daily_menus as $key => $value){
+            $product = $this->product_model->get_info($value->product_id);
+            $daily_menus[$key]->name = $product->name;
+            $daily_menus[$key]->menu = $this->catalog_model->get_info($product->catalog_id)->name;
+        }
+        return $this->load->view('admin/kitchen/daily_menu/tb_daily_menu', array('daily_menus'=>$daily_menus));
     }
 }

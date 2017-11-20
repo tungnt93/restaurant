@@ -4,15 +4,20 @@ Class Warehouse extends MY_Controller {
         parent::__construct();
         $this->load->model('warehouse_model');
         $this->load->model('food_model');
+        $this->load->model('catalog_model');
         $this->load->model('user_model');
+        $this->load->model('import_model');
+        $this->load->model('utensils_model');
     }
 
     function index() {
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
-        $warehouses = $this->warehouse_model->get_list();
-        $this->data['warehouses'] = $warehouses;
-
+        $foods = $this->food_model->get_list();
+        $this->data['foods'] = $foods;
+//        pre($foods);
+        $utensils = $this->utensils_model->get_list();
+        $this->data['utensils'] = $utensils;
         $this->data['temp'] = 'admin/warehouse/index';
         $this->load->view('admin/layout', $this->data);
     }
@@ -20,24 +25,59 @@ Class Warehouse extends MY_Controller {
     function add(){
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
+
+        $list_catalog = $this->catalog_model->get_list();
+        $items = array();
+        foreach ($list_catalog as $key => $value){
+            $items[$key] = new stdClass();
+            $items[$key]->optgroup = $value->name;
+            $input = array();
+            $input['where']['catalog_id'] = $value->id;
+            $items[$key]->item = $this->food_model->get_list($input);
+        }
+        $this->data['items'] = $items;
+
         if($this->input->post('btnAdd')){
             $now = new DateTime();
-            $id = $this->input->post('slFood');
+            $id = $this->input->post('slItem');
             $quantity = $this->input->post('txtQuantity');
+            $type = $this->input->post('slType');
             $data= array(
-                'food_id' => $id,
+                'item_id' => $id,
                 'quantity'=> $quantity,
                 'price'=> $this->input->post('txtPrice'),
-                'create_by'=> $this->data['Employee']->id,
+                'type'=> $type,
+                'create_by'=> $this->data['admin']->id,
                 'created'=> $now->getTimestamp(),
             );
-            if($this->warehouse_model->create($data)){
+            if($this->import_model->create($data)){
+                if($type == 1){
+                    $food = $this->food_model->get_info($id);
+                    $dataFood = array(
+                        'quantity' => $food->quantity + $quantity
+                    );
+                    $this->food_model->update($id, $dataFood);
+                }
+                else if($type == 2){
+                    if($this->input->post('slItem') == 0){
+                        $newUtensil = $this->input->post('txtNewUtensils');
+                        $newUtensil = array(
+                            'name'      => $newUtensil,
+                            'quantity'  => $quantity,
+                            'status'    => 1,
+                            'created'   => $now->getTimestamp()
+                        );
+                        $this->utensils_model->create($newUtensil);
+                    }
+                    else{
+                        $utensil = $this->utensils_model->get_info($id);
+                        $dataUpdate = array(
+                            'quantity' => $utensil->quantity + $quantity
+                        );
+                        $this->utensils_model->update($id, $dataUpdate);
+                    }
+                }
                 $this->session->set_flashdata('message','Thêm thành công!');
-                $food = $this->food_model->get_info($id);
-                $dataFood = array(
-                    'quantity' => $food->quantity + $quantity
-                );
-                $this->food_model->update($id, $dataFood);
             }
             else{
                 $this->session->set_flashdata('message','Thêm thất bại!');
@@ -120,6 +160,55 @@ Class Warehouse extends MY_Controller {
                     redirect(base_url('admin/catalog'));
                 }
             }
+        }
+    }
+
+    function history(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+        $input = array();
+        $input['where']['type'] = 1;
+        $imports = $this->import_model->get_list($input);
+        $this->data['imports'] = $imports;
+
+        $this->data['temp'] = 'admin/warehouse/history';
+        $this->load->view('admin/layout', $this->data);
+    }
+
+    function getHistoryByType(){
+        $type = $this->input->post('type');
+        $input = array();
+        $input['where']['type'] = $type;
+        $imports = $this->import_model->get_list($input);
+        return $this->load->view('admin/warehouse/tb_history', array('imports'=> $imports));
+    }
+
+    function getItemsImportByType(){
+        $type = $this->input->post('type');
+        if($type == 1){
+            $list_catalog = $this->catalog_model->get_list();
+            $items = array();
+            foreach ($list_catalog as $key => $value){
+                $items[$key] = new stdClass();
+                $items[$key]->optgroup = $value->name;
+                $input = array();
+                $input['where']['catalog_id'] = $value->id;
+                $items[$key]->item = $this->food_model->get_list($input);
+            }
+            foreach ($items as $row){
+                echo '<optgroup label="'.$row->optgroup.'">';
+                foreach ($row->item as $item){
+                    echo '<option value="'.$item->id.'" >'.$item->name.'</option>';
+                }
+                echo '</optgroup>';
+            }
+        }
+        else if($type == 2){
+            $untensils = $this->utensils_model->get_list();
+            foreach ($untensils as $row){
+                echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
+            }
+            echo '<option value="0" >Thêm dụng cụ mới</option>';
         }
     }
 }

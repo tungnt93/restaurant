@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 19, 2017 lúc 06:37 PM
--- Phiên bản máy phục vụ: 10.1.26-MariaDB
--- Phiên bản PHP: 7.0.23
+-- Thời gian đã tạo: Th10 20, 2017 lúc 05:14 AM
+-- Phiên bản máy phục vụ: 10.1.25-MariaDB
+-- Phiên bản PHP: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -111,7 +111,9 @@ CREATE TABLE `daily_menu` (
 
 INSERT INTO `daily_menu` (`id`, `product_id`, `quantity`, `date`, `create_by`, `created`) VALUES
 (3, 49, 30, '20-11-2017', 1, 1511110357),
-(5, 73, 20, '20-11-2017', 1, 1511112430);
+(5, 73, 20, '20-11-2017', 1, 1511112430),
+(6, 73, 20, '21-11-2017', 1, 1511141195),
+(7, 49, 30, '21-11-2017', 1, 1511141195);
 
 -- --------------------------------------------------------
 
@@ -223,7 +225,7 @@ INSERT INTO `food` (`id`, `name`, `dram`, `catalog_id`, `quantity`) VALUES
 (3, 'Rau muống', 'kg', 54, 5),
 (4, 'Cá quả', 'kg', 56, 6),
 (5, 'Ếch', 'kg', 56, 0),
-(6, 'Lươn', 'kg', 56, 0);
+(6, 'Lươn', 'kg', 56, 10);
 
 -- --------------------------------------------------------
 
@@ -233,9 +235,10 @@ INSERT INTO `food` (`id`, `name`, `dram`, `catalog_id`, `quantity`) VALUES
 
 CREATE TABLE `import` (
   `id` int(11) NOT NULL,
-  `food_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` int(11) NOT NULL,
+  `type` tinyint(4) NOT NULL COMMENT '1: thuc pham, 2: dung cu nha bep',
   `create_by` int(11) NOT NULL,
   `created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -244,12 +247,14 @@ CREATE TABLE `import` (
 -- Đang đổ dữ liệu cho bảng `import`
 --
 
-INSERT INTO `import` (`id`, `food_id`, `quantity`, `price`, `create_by`, `created`) VALUES
-(1, 2, 10, 60000, 4, 1510586913),
-(2, 1, 10, 250000, 4, 1510587317),
-(3, 2, 5, 60000, 4, 1510587682),
-(4, 3, 5, 15000, 4, 1510588782),
-(5, 4, 6, 150000, 4, 1510588950);
+INSERT INTO `import` (`id`, `item_id`, `quantity`, `price`, `type`, `create_by`, `created`) VALUES
+(1, 2, 10, 60000, 1, 4, 1510586913),
+(2, 1, 10, 250000, 1, 4, 1510587317),
+(3, 2, 5, 60000, 1, 4, 1510587682),
+(4, 3, 5, 15000, 1, 4, 1510588782),
+(5, 4, 6, 150000, 1, 4, 1510588950),
+(6, 6, 10, 150000, 1, 1, 1511149157),
+(7, 0, 1, 7500000, 2, 1, 1511151176);
 
 -- --------------------------------------------------------
 
@@ -571,6 +576,27 @@ INSERT INTO `user` (`id`, `username`, `password`, `employee_id`, `role`, `status
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `utensils`
+--
+
+CREATE TABLE `utensils` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `created` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `utensils`
+--
+
+INSERT INTO `utensils` (`id`, `name`, `quantity`, `status`, `created`) VALUES
+(1, 'Tủ nấu cơm', 1, 1, 1511151176);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `warehouse`
 --
 
@@ -704,6 +730,12 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `utensils`
+--
+ALTER TABLE `utensils`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
@@ -730,109 +762,96 @@ ALTER TABLE `_table`
 --
 ALTER TABLE `bill`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `catalog`
 --
 ALTER TABLE `catalog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
 --
 -- AUTO_INCREMENT cho bảng `content`
 --
 ALTER TABLE `content`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT cho bảng `daily_menu`
 --
 ALTER TABLE `daily_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT cho bảng `department`
 --
 ALTER TABLE `department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
 --
 -- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
 --
 -- AUTO_INCREMENT cho bảng `food`
 --
 ALTER TABLE `food`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT cho bảng `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT cho bảng `ingredients`
 --
 ALTER TABLE `ingredients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT cho bảng `month`
 --
 ALTER TABLE `month`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT cho bảng `payroll`
 --
 ALTER TABLE `payroll`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
-
 --
 -- AUTO_INCREMENT cho bảng `sale`
 --
 ALTER TABLE `sale`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT cho bảng `timesheets`
 --
 ALTER TABLE `timesheets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
+--
+-- AUTO_INCREMENT cho bảng `utensils`
+--
+ALTER TABLE `utensils`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `_order`
 --
 ALTER TABLE `_order`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT cho bảng `_table`
 --
 ALTER TABLE `_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
