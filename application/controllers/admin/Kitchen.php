@@ -6,7 +6,6 @@ Class Kitchen extends MY_Controller {
         $this->load->model('product_model');
         $this->load->model('food_model');
         $this->load->model('ingredients_model');
-        $this->load->model('product_model');
         $this->load->model('dailyMenu_model');
     }
 

@@ -51,6 +51,12 @@
                             <li><a href="<?php echo admin_url('timesheets')?>">Dụng cụ nhà bếp</a></li>
                         </ul>
                     </li>
+                    <li><a><i class="fa fa-cart-plus" aria-hidden="true"></i>Mua - giao hàng<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('delivery/buy')?>">Mua hàng</a></li>
+                            <li><a href="<?php echo admin_url('delivery')?>">Giao hàng</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-file-text-o" aria-hidden="true"></i> Quản lý website<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a>Món ăn <span class="fa fa-chevron-down"></span></a>
