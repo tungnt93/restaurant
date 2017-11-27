@@ -20,20 +20,17 @@ class MobileApp extends REST_Controller {
     }
 
     function login_post(){
-//        pre( $this->input->post('username'));
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
+//        pre($this->input->request_headers());
+        $username = $this->post('username');
+        $password = $this->post('password');
         $input = array();
-        $input['where'] = array(
-            'username' => $username,
-            'password' => $password
-        );
-//        echo 'password: '.$password;
+        $input['where'] = array('username' => $username,'password' => $password);
         $user = $this->user_model->get_list($input);
         if($user){
             $token = md5(uniqid(rand(), true));
             if($this->user_model->update($user[0]->id, array('token'=>$token))){
                 $info = $this->employee_model->get_info($user[0]->id);
+//                $this->response(array('status'=>'success', 'token'=>$token, 'info'=>$info));
                 $this->my_response(true, array('token'=>$token, 'info'=>$info));
             }
             else{
@@ -47,7 +44,8 @@ class MobileApp extends REST_Controller {
 
     function product_get(){
 //            echo file_get_contents('php://input', 'r');
-        pre(md5(uniqid(rand(), true)));
+        pre($this->input->get_request_header());
+//        pre(md5(uniqid(rand(), true)));
 //        $data = $this->product_model->get_list();
 //        $this->response(array('status'=>'success', 'data'=>$data), 200);
     }
