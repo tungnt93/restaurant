@@ -1,5 +1,6 @@
 <?php $this->load->view('admin/table/order/header')?>
-<div class="row col-sm-8 col-xs-12">
+<div class="row">
+<div class="col-sm-8 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo $table->name?></h2>
@@ -18,7 +19,7 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="x_content" id="list-order-in-table">
+        <div class="x_content" id="list-order-in-table-<?php echo $table->id?>">
             <?php if($table->status == 1){ ?>
                 <div class="btn btn-primary" id="open-table">Tạo bàn</div>
             <?php } else{ $this->load->view('admin/table/order/list_order_in_table'); }?>
@@ -75,6 +76,7 @@
         </div>
     </div>
 </div>
+</div>
 <script src="<?php echo admin_theme()?>vendors/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -100,6 +102,7 @@
         $('#btnAddOrder').click(function () {
             var product_id = $('#slProduct').val();
             var quantity = $('#txtQuantity').val();
+            var table_id = <?php echo $table->id?>;
             if(product_id && quantity){
                 $.ajax({
                     url : "<?php echo admin_url('table/addOrder'); ?>",
@@ -108,15 +111,15 @@
                     data : {
                         product_id: product_id,
                         quantity: quantity,
-                        table_id: <?php echo $table->id?>
+                        table_id: table_id
                     },
                     success : function (result){
                         if(result){
 //                            result = JSON.parse(result);
-                            socket.emit('ADD_ORDER', result);
-//                            $('#list-order-in-table').html(result);
-                            location.reload();
-//                            console.log((result));
+                            socket.emit('ADD_ORDER', table_id);
+                            $('#list-order-in-table-'+table_id).html(result);
+//                            location.reload();
+                            console.log((result));
                         }
                     }
                 });
@@ -129,19 +132,20 @@
 
     function cancel(order_id){
         if(confirm('Xác nhận hủy món này?')){
+            var table_id = <?php echo $table->id?>;
             $.ajax({
                 url : "<?php echo admin_url('table/change_order'); ?>",
                 type : "post",
                 dataType:"text",
                 data : {
                     order_id: order_id,
-                    table_id: <?php echo $table->id?>,
+                    table_id: table_id,
                     change_type: 3
                 },
                 success : function (result){
                     if(result){
-                        socket.emit('CHANGE_ORDER', result);
-                        $('#list-order-in-table').html(result);
+                        socket.emit('CHANGE_ORDER', table_id);
+                        $('#list-order-in-table-'+table_id).html(result);
 //                        location.reload();
                     }
                 }
@@ -150,19 +154,20 @@
     }
 
     function undo(order_id){
+        var table_id = <?php echo $table->id?>;
         $.ajax({
             url : "<?php echo admin_url('table/change_order'); ?>",
             type : "post",
             dataType:"text",
             data : {
                 order_id: order_id,
-                table_id: <?php echo $table->id?>,
+                table_id: table_id,
                 change_type: 1
             },
             success : function (result){
                 if(result){
-                    socket.emit('UNDO_ORDER', result);
-                    $('#list-order-in-table').html(result);
+                    socket.emit('CHANGE_ORDER', table_id);
+                    $('#list-order-in-table-'+table_id).html(result);
 //                    location.reload();
                 }
             }

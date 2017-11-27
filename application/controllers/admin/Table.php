@@ -219,7 +219,14 @@ Class Table extends MY_Controller {
         $order_id = $this->input->post('order_id');
         $table_id = $this->input->post('table_id');
         $change_type = $this->input->post('change_type');
-        if($this->order_model->update($order_id, array('status'=>$change_type))){
+        $dataUpdate = array(
+            'status'=>$change_type
+        );
+        if($change_type == 4 || $change_type == 2){
+            $now = new DateTime();
+            $dataUpdate['edited'] = $now->getTimestamp();
+        }
+        if($this->order_model->update($order_id, $dataUpdate)){
             $table = $this->table_model->get_info($table_id);
             $input = array();
             $input['where']['bill_id'] = $table->bill_id;
@@ -230,6 +237,16 @@ Class Table extends MY_Controller {
         else{
             echo false;
         }
+    }
+
+    function getOrderByTable(){
+        $table_id = $this->input->post('table_id');
+        $table = $this->table_model->get_info($table_id);
+        $input = array();
+        $input['where']['bill_id'] = $table->bill_id;
+        $orders = $this->order_model->get_list($input);
+        $this->data['orders'] = $orders;
+        return $this->load->view('admin/table/order/list_order_in_table', $this->data);
     }
 
 //    function cancel_order(){
@@ -266,14 +283,21 @@ Class Table extends MY_Controller {
 
     function accept_cancel_order(){
         $order_id = $this->input->post('order_id');
-        $table_id = $this->input->post('table_id');
-        if($this->order_model->update($order_id, array('status'=>1))){
-            $table = $this->table_model->get_info($table_id);
+        $change_type = $this->input->post('change_type');
+        $dataUpdate = array(
+            'status'=>$change_type
+        );
+        if($change_type == 4 || $change_type == 2){
+            $now = new DateTime();
+            $dataUpdate['edited'] = $now->getTimestamp();
+        }
+        if($this->order_model->update($order_id, $dataUpdate)){
             $input = array();
-            $input['where']['bill_id'] = $table->bill_id;
+            $input['where']['status'] = 1;
+            $input['or_where']['status'] = 3;
             $orders = $this->order_model->get_list($input);
             $this->data['orders'] = $orders;
-            return $this->load->view('admin/table/order/list_order_in_table', $this->data);
+            return $this->load->view('admin/table/order/table_queue', $this->data);
         }
         else{
             echo false;
@@ -283,21 +307,69 @@ Class Table extends MY_Controller {
     function queue(){
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
+
+        $input = array();
+        $input['where']['status'] = 2;
+        $input['or_where']['status'] = 4;
+        $input['order'] = array('edited','DESC');
+        $input['limit'] = array('4' ,'0');
+        $order_undo = $this->order_model->get_list($input);
+
         $input = array();
         $input['where']['status'] = 1;
         $input['or_where']['status'] = 3;
+        $input['order'] = array('id','ASC');
         $orders = $this->order_model->get_list($input);
+
+        $orders = array_merge($order_undo, $orders);
+
         $this->data['orders'] = $orders;
+
         $this->data['temp'] = 'admin/table/order/queue';
         $this->load->view('admin/layout', $this->data);
     }
 
     function getQueue(){
         $input = array();
+        $input['where']['status'] = 2;
+        $input['or_where']['status'] = 4;
+        $input['order'] = array('edited','DESC');
+        $input['limit'] = array('4' ,'0');
+        $order_undo = $this->order_model->get_list($input);
+
+        $input = array();
         $input['where']['status'] = 1;
+        $input['or_where']['status'] = 3;
+        $input['order'] = array('id','ASC');
         $orders = $this->order_model->get_list($input);
+        $orders = array_merge($order_undo, $orders);
+
         $this->data['orders'] = $orders;
         return $this->load->view('admin/table/order/table_queue', $this->data);
+    }
+
+    function payment(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+
+        $table_id = $this->uri->segment(4);
+        $table = $this->table_model->get_info($table_id);
+        if($table->bill_id <= 0){
+            redirect(admin_url('table/order/'.$table_id));
+        }
+        $input = array();
+        $input['where']['bill_id'] = $table->bill_id;
+        $orders = $this->order_model->get_list($input);
+        foreach ($orders as $key => $value){
+            if($value->status == 4){
+                unset($orders[$key]);
+            }
+        }
+        $this->data['orders'] = $orders;
+        $this->data['table'] = $table;
+
+        $this->data['temp'] = 'admin/payment/index';
+        $this->load->view('admin/layout', $this->data);
     }
 
     function book(){

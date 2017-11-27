@@ -318,7 +318,10 @@ class MY_Model extends CI_Model {
 		{
 			$this->db->where($input['where']);
 		}
-		
+
+		if(isset($input['or_where']) && $input['or_where']){
+            $this->db->or_where($input['or_where']);
+        }
 		//tim kiem like
 		// $input['like'] = array('name' => 'abc');
 	    if ((isset($input['like'])) && $input['like'])

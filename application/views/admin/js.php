@@ -44,28 +44,85 @@
 
 <!-- Flot -->
 <!-- datatable -->
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/jszip/dist/jszip.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="<?php echo admin_theme('');?>/vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="<?php echo admin_theme();?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo admin_theme();?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/jszip/dist/jszip.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/pdfmake/build/pdfmake.min.js"></script>
+<script src="<?php echo admin_theme('');?>vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>-->
 <!--<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>-->
 <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />-->
+<script src="<?php echo admin_theme('src/js/socket.js');?>"></script>
 <script>
+    var socket = io("http://localhost:3000");
+    socket.on('SERVER_SEND', function(data){
+
+    });
+    socket.on('OPEN_TABLE', function(data){
+        $.ajax({
+            url : "<?php echo admin_url('table/list_table'); ?>",
+            type : "post",
+            dataType:"text",
+            success : function (result){
+                if(result){
+                    $('#list-table').html(result);
+                }
+            }
+        });
+    });
+
+    socket.on('ADD_ORDER', function(data){
+        $.ajax({
+            url : "<?php echo admin_url('table/getQueue'); ?>",
+            type : "post",
+            dataType:"text",
+            success : function (result){
+                if(result){
+                    $('#table-queue').html(result);
+                }
+            }
+        });
+    });
+
+    socket.on('CHANGE_ORDER', function(table_id){
+        $.ajax({
+            url : "<?php echo admin_url('table/getQueue'); ?>",
+            type : "post",
+            dataType:"text",
+            success : function (result){
+                if(result){
+                    $('#table-queue').html(result);
+                }
+            }
+        });
+        $.ajax({
+            url : "<?php echo admin_url('table/getOrderByTable'); ?>",
+            type : "post",
+            dataType:"text",
+            data : {
+                table_id: table_id,
+            },
+            success : function (result){
+                if(result){
+                    $('#list-order-in-table-'+table_id).html(result);
+                }
+            }
+        });
+    });
+
     $(document).ready(function() {
-//        $('#datatable-foods').DataTable();
+        $('#tb-payment').dataTable({});
 //        $('#txtBirthday').daterangepicker({
 //            singleDatePicker: true,
 //            calender_style: "picker_4",
@@ -125,6 +182,8 @@
                 dateFormat: 'dd-mm-yy',
             });
         });
+
+
 
     });
 </script>

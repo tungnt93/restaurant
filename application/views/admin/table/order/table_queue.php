@@ -10,23 +10,29 @@
     </tr>
     <?php
     $i = 1;
+    $arr = array('Đang chờ', 'Đã giao', 'Đang chờ hủy', 'Đã hủy');
+    $arrColor = array('#f9f9f9', 'lightcyan', 'lavender', 'antiquewhite');
     foreach ($orders as $row){ ?>
-        <tr>
+        <tr style="background-color: <?php echo $arrColor[$row->status - 1]?>">
             <td><?php echo $i?></td>
             <td><?php echo $this->product_model->get_info($row->product_id)->name?></td>
             <td><?php echo $row->quantity?></td>
             <td><?php echo $this->table_model->get_info($row->table_id)->name?></td>
             <td><?php echo date('h:i', $row->created)?></td>
-            <td><?php echo $row->status == 1 ? 'Đang chờ' : ($row->status == 2 ? 'Đã giao' : 'Đang chờ hủy')?></td>
+            <td><?php echo $arr[$row->status - 1] ?></td>
             <td>
                 <?php if($row->status == 1){ ?>
-                    <div onclick="cancel(<?php echo $row->id ?>)" class="btn btn-xs btn-warning">Hủy</div>
+                    <div onclick="done(<?php echo $row->id ?>, <?php echo $row->table_id ?>)" class="btn btn-xs btn-success">Xong</div>
+                    <div onclick="cancel(<?php echo $row->id ?>, <?php echo $row->table_id ?>)" class="btn btn-xs btn-warning">Hủy</div>
                 <?php } else if($row->status == 3){ ?>
-                    <div onclick="accept(<?php echo $row->id ?>)" class="btn btn-xs btn-success">Đồng ý</div>
-                    <div onclick="deny(<?php echo $row->id ?>)" class="btn btn-xs btn-danger">Hủy</div>
+                    <div onclick="accept(<?php echo $row->id ?>, <?php echo $row->table_id ?>)" class="btn btn-xs btn-primary">Đồng ý</div>
+                    <div onclick="deny(<?php echo $row->id ?>, <?php echo $row->table_id ?>)" class="btn btn-xs btn-danger">Hủy</div>
+                <?php } else{ ?>
+                    <div onclick="undo_action(<?php echo $row->id ?>, <?php echo $row->table_id ?>)" class="btn btn-xs btn-default">Hoàn tác</div>
                 <?php }?>
             </td>
         </tr>
         <?php $i++; }?>
 
 </table>
+

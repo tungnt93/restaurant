@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 20, 2017 lúc 05:14 AM
--- Phiên bản máy phục vụ: 10.1.25-MariaDB
--- Phiên bản PHP: 5.6.31
+-- Thời gian đã tạo: Th10 27, 2017 lúc 05:58 PM
+-- Phiên bản máy phục vụ: 10.1.26-MariaDB
+-- Phiên bản PHP: 7.0.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,11 +30,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bill` (
   `id` int(11) NOT NULL,
-  `id_table` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL COMMENT '1: chua thanh toan, 2: da thanh toan',
+  `table_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '2: đang dùng, 3: đặt trước, 4: đã thanh toán',
+  `customer` varchar(50) NOT NULL,
   `description` text NOT NULL,
-  `created` tinyint(4) NOT NULL
+  `created` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `bill`
+--
+
+INSERT INTO `bill` (`id`, `table_id`, `status`, `customer`, `description`, `created`) VALUES
+(1, 12, 2, '', '', 1511681541),
+(2, 11, 2, '', '', 1511681541),
+(3, 8, 4, '', '', 1511681541),
+(4, 7, 2, '', '', 1511681541),
+(5, 6, 2, '', '', 1511681541),
+(6, 5, 2, '', '', 1511681541),
+(7, 3, 2, '', '', 1511681664),
+(8, 2, 2, '', '', 1511715282);
 
 -- --------------------------------------------------------
 
@@ -88,7 +103,7 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`id`, `company_name`, `address`, `email`, `phone`, `intro`, `facebook`, `google`, `twitter`, `youtube`, `logo`, `slider`, `view`) VALUES
-(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3842-1400-11/2017-250-1-20/11/2017-0');
+(1, 'Nhà hàng ABC', 'Số 2 Nguyễn Thị Thập, Cầu Giấy, Hà Nội', 'nhahangabc@gmail.com', '0916341138', '<p>Ch&agrave;o mừng c&aacute;c bạn&nbsp;đang&nbsp;đến với&nbsp;website của ch&uacute;ng t&ocirc;i</p>\r\n', '#', '#', '#', '#', 'logo1.png', 'img1.jpg/img2.jpg/img3.jpg', '3842-1400-11/2017-250-0-27/11/2017-0');
 
 -- --------------------------------------------------------
 
@@ -112,8 +127,34 @@ CREATE TABLE `daily_menu` (
 INSERT INTO `daily_menu` (`id`, `product_id`, `quantity`, `date`, `create_by`, `created`) VALUES
 (3, 49, 30, '20-11-2017', 1, 1511110357),
 (5, 73, 20, '20-11-2017', 1, 1511112430),
-(6, 73, 20, '21-11-2017', 1, 1511141195),
-(7, 49, 30, '21-11-2017', 1, 1511141195);
+(6, 73, 30, '22-11-2017', 1, 1511282747),
+(7, 72, 30, '22-11-2017', 1, 1511282751),
+(8, 72, 30, '26-11-2017', 1, 1511682951),
+(9, 73, 30, '26-11-2017', 1, 1511682951),
+(10, 47, 50, '26-11-2017', 1, 1511682971),
+(11, 46, 50, '26-11-2017', 1, 1511682976),
+(12, 29, 50, '26-11-2017', 1, 1511682981),
+(13, 28, 50, '26-11-2017', 1, 1511682987),
+(14, 27, 50, '26-11-2017', 1, 1511682990),
+(15, 22, 50, '26-11-2017', 1, 1511682997),
+(16, 8, 50, '26-11-2017', 1, 1511683005),
+(17, 5, 50, '26-11-2017', 1, 1511683011),
+(18, 2, 50, '26-11-2017', 1, 1511683015),
+(19, 30, 50, '26-11-2017', 1, 1511683027),
+(20, 37, 50, '26-11-2017', 1, 1511683032),
+(21, 37, 50, '27-11-2017', 1, 1511792000),
+(22, 30, 50, '27-11-2017', 1, 1511792000),
+(23, 2, 50, '27-11-2017', 1, 1511792000),
+(24, 5, 50, '27-11-2017', 1, 1511792000),
+(25, 8, 50, '27-11-2017', 1, 1511792000),
+(26, 22, 50, '27-11-2017', 1, 1511792000),
+(27, 27, 50, '27-11-2017', 1, 1511792000),
+(28, 28, 50, '27-11-2017', 1, 1511792000),
+(29, 29, 50, '27-11-2017', 1, 1511792000),
+(30, 46, 50, '27-11-2017', 1, 1511792000),
+(31, 47, 50, '27-11-2017', 1, 1511792000),
+(32, 73, 30, '27-11-2017', 1, 1511792000),
+(33, 72, 30, '27-11-2017', 1, 1511792000);
 
 -- --------------------------------------------------------
 
@@ -225,7 +266,7 @@ INSERT INTO `food` (`id`, `name`, `dram`, `catalog_id`, `quantity`) VALUES
 (3, 'Rau muống', 'kg', 54, 5),
 (4, 'Cá quả', 'kg', 56, 6),
 (5, 'Ếch', 'kg', 56, 0),
-(6, 'Lươn', 'kg', 56, 10);
+(6, 'Lươn', 'kg', 56, 0);
 
 -- --------------------------------------------------------
 
@@ -235,10 +276,9 @@ INSERT INTO `food` (`id`, `name`, `dram`, `catalog_id`, `quantity`) VALUES
 
 CREATE TABLE `import` (
   `id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `food_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` int(11) NOT NULL,
-  `type` tinyint(4) NOT NULL COMMENT '1: thuc pham, 2: dung cu nha bep',
   `create_by` int(11) NOT NULL,
   `created` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -247,14 +287,12 @@ CREATE TABLE `import` (
 -- Đang đổ dữ liệu cho bảng `import`
 --
 
-INSERT INTO `import` (`id`, `item_id`, `quantity`, `price`, `type`, `create_by`, `created`) VALUES
-(1, 2, 10, 60000, 1, 4, 1510586913),
-(2, 1, 10, 250000, 1, 4, 1510587317),
-(3, 2, 5, 60000, 1, 4, 1510587682),
-(4, 3, 5, 15000, 1, 4, 1510588782),
-(5, 4, 6, 150000, 1, 4, 1510588950),
-(6, 6, 10, 150000, 1, 1, 1511149157),
-(7, 0, 1, 7500000, 2, 1, 1511151176);
+INSERT INTO `import` (`id`, `food_id`, `quantity`, `price`, `create_by`, `created`) VALUES
+(1, 2, 10, 60000, 4, 1510586913),
+(2, 1, 10, 250000, 4, 1510587317),
+(3, 2, 5, 60000, 4, 1510587682),
+(4, 3, 5, 15000, 4, 1510588782),
+(5, 4, 6, 150000, 4, 1510588950);
 
 -- --------------------------------------------------------
 
@@ -576,27 +614,6 @@ INSERT INTO `user` (`id`, `username`, `password`, `employee_id`, `role`, `status
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `utensils`
---
-
-CREATE TABLE `utensils` (
-  `id` int(11) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `created` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `utensils`
---
-
-INSERT INTO `utensils` (`id`, `name`, `quantity`, `status`, `created`) VALUES
-(1, 'Tủ nấu cơm', 1, 1, 1511151176);
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `warehouse`
 --
 
@@ -620,8 +637,28 @@ CREATE TABLE `_order` (
   `bill_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` tinyint(4) NOT NULL,
-  `created` int(11) NOT NULL
+  `status` tinyint(4) NOT NULL COMMENT '1: đang chờ, 2: đã giao, 3: hủy, 4: hủy ok',
+  `created` int(11) NOT NULL,
+  `edited` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `_order`
+--
+
+INSERT INTO `_order` (`id`, `table_id`, `bill_id`, `product_id`, `quantity`, `status`, `created`, `edited`) VALUES
+(1, 8, 3, 5, 1, 2, 1511686759, 1511795237),
+(2, 8, 3, 5, 1, 4, 1511687331, 1511795244),
+(3, 8, 3, 28, 1, 3, 1511687927, 1511795239),
+(4, 8, 3, 46, 1, 4, 1511689073, 1511795246),
+(5, 11, 2, 46, 1, 1, 1511714538, 1511794953),
+(6, 11, 2, 72, 1, 2, 1511714578, 1511795240),
+(7, 11, 2, 47, 1, 1, 1511714619, 0),
+(8, 11, 2, 30, 1, 1, 1511714709, 0),
+(9, 11, 2, 8, 1, 1, 1511714723, 0),
+(10, 8, 3, 37, 1, 1, 1511792022, 1511794484),
+(11, 8, 3, 2, 1, 1, 1511792105, 1511794483),
+(12, 8, 3, 29, 1, 1, 1511792231, 0);
 
 -- --------------------------------------------------------
 
@@ -632,8 +669,28 @@ CREATE TABLE `_order` (
 CREATE TABLE `_table` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `seat` tinyint(2) NOT NULL
+  `seat` tinyint(2) NOT NULL,
+  `status` tinyint(4) NOT NULL COMMENT '1: trong, 2: dang dung, 3: da dat',
+  `bill_id` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  `customer` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `_table`
+--
+
+INSERT INTO `_table` (`id`, `name`, `seat`, `status`, `bill_id`, `time`, `customer`) VALUES
+(1, 'Bàn 1', 6, 1, 0, 0, ''),
+(2, 'Bàn 2', 6, 2, 8, 0, ''),
+(3, 'Bàn 3', 12, 2, 7, 0, ''),
+(4, 'Bàn 4', 12, 3, 0, 0, 'Chị Hoa'),
+(5, 'Bàn 5', 6, 2, 6, 0, ''),
+(6, 'Bàn 6', 20, 2, 5, 0, ''),
+(7, 'Bàn 7', 10, 2, 4, 0, ''),
+(8, 'Bàn 8', 10, 1, 0, 0, ''),
+(11, 'Bàn 9', 10, 2, 2, 0, ''),
+(12, 'Bàn 10', 10, 2, 1, 0, '');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -730,12 +787,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `utensils`
---
-ALTER TABLE `utensils`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Chỉ mục cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
@@ -761,97 +812,110 @@ ALTER TABLE `_table`
 -- AUTO_INCREMENT cho bảng `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT cho bảng `catalog`
 --
 ALTER TABLE `catalog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
 --
 -- AUTO_INCREMENT cho bảng `content`
 --
 ALTER TABLE `content`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT cho bảng `daily_menu`
 --
 ALTER TABLE `daily_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
 --
 -- AUTO_INCREMENT cho bảng `department`
 --
 ALTER TABLE `department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
 --
 -- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT cho bảng `food`
 --
 ALTER TABLE `food`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT cho bảng `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT cho bảng `ingredients`
 --
 ALTER TABLE `ingredients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT cho bảng `month`
 --
 ALTER TABLE `month`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT cho bảng `payroll`
 --
 ALTER TABLE `payroll`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
 --
 -- AUTO_INCREMENT cho bảng `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+
 --
 -- AUTO_INCREMENT cho bảng `sale`
 --
 ALTER TABLE `sale`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT cho bảng `timesheets`
 --
 ALTER TABLE `timesheets`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT cho bảng `utensils`
---
-ALTER TABLE `utensils`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT cho bảng `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT cho bảng `_order`
 --
 ALTER TABLE `_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT cho bảng `_table`
 --
 ALTER TABLE `_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

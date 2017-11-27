@@ -28,7 +28,21 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                    <li><a href="<?php echo admin_url('report')?>"><i class="fa fa-home" aria-hidden="true"></i></i> Tổng quan</a></li>
+                    <li><a href="<?php echo admin_url('report')?>"><i class="fa fa-home" aria-hidden="true"></i> Tổng quan</a></li>
+                    <li><a><i class="fa fa-money" aria-hidden="true"></i> Quản lý tài chính <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('finance/cashier')?>">Thu ngân</a></li>
+                            <li><a href="<?php echo admin_url('finance/report')?>">Các khoản thu chi</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-cutlery" aria-hidden="true"></i>Quản lý bàn <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('table/queue')?>">Hàng chờ</a></li>
+                            <li><a href="<?php echo admin_url('table/order')?>">Gọi món</a></li>
+                            <li><a href="<?php echo admin_url('table/book')?>">Đặt bàn</a></li>
+                            <li><a href="<?php echo admin_url('table')?>">Danh sách bàn</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-users" aria-hidden="true"></i>Quản lý nhân sự <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="<?php echo admin_url('employee')?>">Danh sách nhân sự</a></li>

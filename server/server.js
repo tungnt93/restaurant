@@ -24,17 +24,17 @@ io.on("connection", function(socket){
     });
 
     socket.on("OPEN_TABLE", function(data){
-        console.log('open table: ' + data);
+        console.log('open table');
         io.sockets.emit('OPEN_TABLE', data);
     });
 
     socket.on("ADD_ORDER", function(data){
-        console.log('add order: ' + data);
+        console.log('add order');
         io.sockets.emit('ADD_ORDER', data);
     });
 
     socket.on("CHANGE_ORDER", function(data){
-        console.log('add order: ' + data);
+        console.log('change order');
         io.sockets.emit('CHANGE_ORDER', data);
     });
 });

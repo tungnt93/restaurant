@@ -37,47 +37,100 @@
         margin-top: 35px;
     }
 </style>
-
 <script src="<?php echo admin_theme()?>vendors/jquery/dist/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-
-    });
-
-    function accept(order_id){
+    function accept(order_id, table_id){
         $.ajax({
             url : "<?php echo admin_url('table/accept_cancel_order'); ?>",
             type : "post",
             dataType:"text",
             data : {
                 order_id: order_id,
-                table_id: <?php echo $table->id?>
+                table_id: table_id,
+                change_type: 4
             },
             success : function (result){
                 if(result){
-                    socket.emit('CHANGE_ORDER', result);
-                    $('#list-order-in-table').html(result);
+                    socket.emit('CHANGE_ORDER', table_id);
+                    $('#table-queue').html(result);
 //                        location.reload();
                 }
             }
         });
     }
 
-    function deny(order_id){
+    function deny(order_id, table_id){
+        $.ajax({
+            url : "<?php echo admin_url('table/accept_cancel_order'); ?>",
+            type : "post",
+            dataType:"text",
+            data : {
+                order_id: order_id,
+                table_id: table_id,
+                change_type: 1
+            },
+            success : function (result){
+                if(result){
+                    socket.emit('CHANGE_ORDER', table_id);
+                    $('#table-queue').html(result);
+//                    location.reload();
+                }
+            }
+        });
+    }
+
+    function cancel(order_id, table_id) {
         $.ajax({
             url : "<?php echo admin_url('table/change_order'); ?>",
             type : "post",
             dataType:"text",
             data : {
                 order_id: order_id,
-                table_id: <?php echo $table->id?>,
+                table_id: table_id,
+                change_type: 4
+            },
+            success : function (result){
+                if(result){
+                    socket.emit('CHANGE_ORDER', table_id);
+                    $('#list-order-in-table').html(result);
+                }
+            }
+        });
+    }
+
+    function done(order_id, table_id) {
+        $.ajax({
+            url : "<?php echo admin_url('table/change_order'); ?>",
+            type : "post",
+            dataType:"text",
+            data : {
+                order_id: order_id,
+                table_id: table_id,
+                change_type: 2
+            },
+            success : function (result){
+                if(result){
+                    socket.emit('CHANGE_ORDER', table_id);
+                    $('#list-order-in-table').html(result);
+                }
+            }
+        });
+    }
+
+    function undo_action(order_id, table_id) {
+        $.ajax({
+            url : "<?php echo admin_url('table/change_order'); ?>",
+            type : "post",
+            dataType:"text",
+            data : {
+                order_id: order_id,
+                table_id: table_id,
                 change_type: 1
             },
             success : function (result){
                 if(result){
-                    socket.emit('CHANGE_ORDER', result);
+                    socket.emit('CHANGE_ORDER', table_id);
                     $('#list-order-in-table').html(result);
-//                    location.reload();
                 }
             }
         });
