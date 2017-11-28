@@ -173,4 +173,24 @@
             }
         });
     }
+
+    function closeTable(table_id){
+        $.ajax({
+            url : "<?php echo admin_url('table/close_table'); ?>",
+            type : "post",
+            dataType:"text",
+            data : {
+                table_id: table_id
+            },
+            success : function (result){
+                if(result){
+                    socket.emit('CHANGE_TABLE', table_id);
+                    location.reload();
+                }
+                else{
+                    alert('Không thể hủy bàn khi có order!');
+                }
+            }
+        });
+    }
 </script>

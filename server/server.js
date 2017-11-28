@@ -21,12 +21,18 @@ io.on("connection", function(socket){
 
     socket.on("CLIENT_SEND", function(data){
         console.log(socket.id + ': ' + data);
+        io.sockets.emit('CLIENT_SEND', data);
     });
 
-    socket.on("OPEN_TABLE", function(data){
-        console.log('open table');
-        io.sockets.emit('OPEN_TABLE', data);
+    socket.on("CHANGE_TABLE", function(data){
+        console.log('change table');
+        io.sockets.emit('CHANGE_TABLE', data);
     });
+
+    // socket.on("CLOSE_TABLE", function(data){
+    //     console.log('close table');
+    //     io.sockets.emit('CLOSE_TABLE', data);
+    // });
 
     socket.on("ADD_ORDER", function(data){
         console.log('add order');

@@ -69,7 +69,7 @@
     socket.on('SERVER_SEND', function(data){
 
     });
-    socket.on('OPEN_TABLE', function(data){
+    socket.on('CHANGE_TABLE', function(data){
         $.ajax({
             url : "<?php echo admin_url('table/list_table'); ?>",
             type : "post",
@@ -122,6 +122,7 @@
     });
 
     $(document).ready(function() {
+        socket.emit('CLIENT_SEND', 'test');
         $('#tb-payment').dataTable({});
 //        $('#txtBirthday').daterangepicker({
 //            singleDatePicker: true,

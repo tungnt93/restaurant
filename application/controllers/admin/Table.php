@@ -190,6 +190,24 @@ Class Table extends MY_Controller {
         }
     }
 
+    function close_table(){
+        $table_id = $this->input->post('table_id');
+        $table = $this->table_model->get_info($table_id);
+        $input = array();
+        $input['where']['bill_id'] = $table->bill_id;
+        $countOrder = $this->order_model->get_total($input);
+        if($countOrder > 0){
+            echo false;
+        }
+        else{
+            $updateTable = array('status'=>1, 'bill_id'=>0);
+            $updateBill = array('status'=>5);
+            $this->table_model->update($updateTable);
+            $this->bill_model->update($updateBill);
+            echo true;
+        }
+    }
+
     function addOrder(){
         $product_id = $this->input->post('product_id');
         $quantity = $this->input->post('quantity');
