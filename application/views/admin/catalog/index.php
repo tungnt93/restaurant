@@ -26,6 +26,7 @@
 	            <th>Mã số</th>
 	            <th>Ảnh minh họa</th>
 	            <th>Tên</th>
+				<th>Trạng thái</th>
 	            <th>Thứ tự hiển thị</th>
 	            <th>Hành động</th>
 	          </tr>
@@ -38,6 +39,7 @@
 			            <td><?php echo $value->id?></td>
 			            <td><img src="<?php echo public_url('images/menu/'.$value->img)?>" style="max-width: 150px"></td>
 			            <td><?php echo $value->name?></td>
+						<td><?php echo $value->status == 1 ? 'Hiển thị' : 'Ẩn'?></td>
 			            <td><?php echo $value->position?></td>
 			            <td>
 			            	<a href="<?php echo admin_url('catalog/edit/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
@@ -55,6 +57,6 @@
         var r = confirm("Bạn có chắc chắn muốn xóa danh mục này?");
         if (r == true) {
             window.location.href = "<?php echo admin_url('catalog/del/')?>" + id;
-        } 
+        }
     }
 </script>

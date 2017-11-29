@@ -8,12 +8,12 @@ Class Catalog extends MY_Controller {
 
 	function index() {
 		$message = $this->session->flashdata('message');
-	  $this->data['message'] = $message;
+	  	$this->data['message'] = $message;
 		$input = array();
 		$input['order'] = array('position','ASC');
 		$list_catalog = $this->catalog_model->get_list($input);
 		$this->data['list_catalog'] = $list_catalog;
-		$this->data['type'] = 1;
+		$this->data['type'] = 0;
 		$this->data['temp'] = 'admin/catalog/index';
 		$this->load->view('admin/layout', $this->data);
 	}
@@ -50,7 +50,8 @@ Class Catalog extends MY_Controller {
               $this->session->set_flashdata('message', $this->upload->display_errors());
               redirect(base_url('admin/catalog/add'));
           }
-			}
+		}
+		$this->data['type'] = 0;
 		$this->data['temp'] = 'admin/catalog/add';
 		$this->load->view('admin/layout', $this->data);
 	}
@@ -71,9 +72,11 @@ Class Catalog extends MY_Controller {
 		if($this->input->post('btnAddCatalog')){
 			$name = $this->input->post('txtName');
 			$position = $this->input->post('txtPosition');
+			$status = $this->input->post('status');
             $dataSubmit = array(
                 'name'		=> $name,
-                'position'	=> $position
+                'position'	=> $position,
+				'status'	=> $status
             );
             $config['upload_path'] = './public/images/menu';
             $config['allowed_types'] = 'jpg|png|JPG|PNG';
@@ -95,6 +98,7 @@ Class Catalog extends MY_Controller {
             }
 		}
 		//pre($id_catalog);
+		$this->data['type'] = 0;
 		$this->data['temp'] = 'admin/catalog/edit';
 		$this->load->view('admin/layout', $this->data);
 	}

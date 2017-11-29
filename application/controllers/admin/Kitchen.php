@@ -52,7 +52,8 @@ Class Kitchen extends MY_Controller {
                   'name'		=> $name,
                   'position'	=> $position,
                   'img'       => $img,
-                  'type' => 1
+                  'type' => 1,
+                  'status'  => 2
               );
               if($this->catalog_model->create($dataSubmit)){
                   $this->session->set_flashdata('message','Thêm thành công');
