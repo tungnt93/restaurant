@@ -5,8 +5,11 @@ Class Kitchen extends MY_Controller {
         $this->load->model('catalog_model');
         $this->load->model('product_model');
         $this->load->model('food_model');
+        $this->load->model('order_model');
+        $this->load->model('table_model');
         $this->load->model('ingredients_model');
         $this->load->model('dailyMenu_model');
+        $this->load->model('utensils_model');
     }
 
     function index() {
@@ -16,6 +19,58 @@ Class Kitchen extends MY_Controller {
 
         $this->data['temp'] = 'admin/kitchen/index';
         $this->load->view('admin/layout', $this->data);
+    }
+
+    function catalog(){
+      $message = $this->session->flashdata('message');
+  	  $this->data['message'] = $message;
+  		$input = array();
+  		$input['order'] = array('position','ASC');
+      $input['where']['type'] = 1;
+  		$list_catalog = $this->catalog_model->get_list($input);
+  		$this->data['list_catalog'] = $list_catalog;
+      $this->data['type'] = 1;
+  		$this->data['temp'] = 'admin/catalog/index';
+  		$this->load->view('admin/layout', $this->data);
+    }
+
+    function add_catalog(){
+      $message = $this->session->flashdata('message');
+      $this->data['message'] = $message;
+			if($this->input->post('btnAddCatalog')){
+					$name = $this->input->post('txtName');
+					$position = $this->input->post('txtPosition');
+            //upload images
+          $config['upload_path'] = './public/images/menu';
+          $config['allowed_types'] = 'jpg|png|JPG|PNG';
+
+          $this->load->library("upload", $config);
+          if($this->upload->do_upload('imageMenu')){
+              $img_data = $this->upload->data();
+              $img = $img_data['file_name'];
+              $dataSubmit = array(
+                  'name'		=> $name,
+                  'position'	=> $position,
+                  'img'       => $img,
+                  'type' => 1
+              );
+              if($this->catalog_model->create($dataSubmit)){
+                  $this->session->set_flashdata('message','Thêm thành công');
+                  redirect(base_url('admin/bar/catalog'));
+              }
+              else{
+                  $this->session->set_flashdata('message', 'Thêm thất bại!');
+                  redirect(base_url('admin/bar/add_catalog'));
+              }
+          }
+          else{
+              $this->session->set_flashdata('message', $this->upload->display_errors());
+              redirect(base_url('admin/bar/add_catalog'));
+          }
+			}
+      $this->data['type'] = 1;
+      $this->data['temp'] = 'admin/catalog/add';
+      $this->load->view('admin/layout', $this->data);
     }
 
     function product(){
@@ -294,4 +349,27 @@ Class Kitchen extends MY_Controller {
         }
         return $this->load->view('admin/kitchen/daily_menu/tb_daily_menu', array('daily_menus'=>$daily_menus));
     }
+
+    function order(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+        $order_undo = $this->order_model->get_order_undo(1);
+        $orders = $this->order_model->get_order(1);
+        $orders = array_merge($order_undo, $orders);
+        $this->data['orders'] = $orders;
+        $this->session->set_userdata('type', 1);
+        $this->data['temp'] = 'admin/table/order/queue';
+        $this->load->view('admin/layout', $this->data);
+    }
+
+    function utensil(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+        $this->data['type'] = 1;
+        $utensils = $this->utensils_model->get_list(array('where'=>array('type'=> 1)));
+        $this->data['utensils'] = $utensils;
+        $this->data['temp'] = 'admin/warehouse/utensil/index';
+        $this->load->view('admin/layout', $this->data);
+    }
+
 }

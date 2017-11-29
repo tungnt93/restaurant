@@ -7,7 +7,7 @@ Class Home extends MY_Controller {
 		$this->load->model('sale_model');
 		$this->load->model('catalog_model');
 	}
-	
+
 	function index() {
 
 		$per_page = 40;
@@ -28,6 +28,7 @@ Class Home extends MY_Controller {
 
         $input = array();
         $input['order'] = array('position', 'ASC');
+				$input['where']['status'] = 1;
         $catalog = $this->catalog_model->get_list($input);
         $this->data['catalog'] = $catalog;
 
@@ -69,14 +70,14 @@ Class Home extends MY_Controller {
 			$input = array();
 	        $input['like'] = array('name', $search_term);
 	        $total = count($this->product_model->get_list($input));
-			 
+
 	        $paginator = config_pagination($per_page, 2, $total, base_url('search'));
 	        if ($offset >= 1) {
 	        	$offset -= 1;
 	        	$offset = $offset*$per_page;
 	        }
 
-			
+
 	        $input['limit'] = array($per_page, $offset);
 	        $list_product = $this->product_model->get_list($input);
 	        $this->data['list_product'] = $list_product;

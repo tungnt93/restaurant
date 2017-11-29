@@ -47,7 +47,7 @@
             data : {
                 order_id: order_id,
                 table_id: table_id,
-                change_type: 4
+                change_type: 4,
             },
             success : function (result){
                 if(result){
@@ -67,7 +67,7 @@
             data : {
                 order_id: order_id,
                 table_id: table_id,
-                change_type: 1
+                change_type: 1,
             },
             success : function (result){
                 if(result){
@@ -87,7 +87,7 @@
             data : {
                 order_id: order_id,
                 table_id: table_id,
-                change_type: 4
+                change_type: 4,
             },
             success : function (result){
                 if(result){
@@ -106,7 +106,7 @@
             data : {
                 order_id: order_id,
                 table_id: table_id,
-                change_type: 2
+                change_type: 2,
             },
             success : function (result){
                 if(result){
@@ -125,7 +125,7 @@
             data : {
                 order_id: order_id,
                 table_id: table_id,
-                change_type: 1
+                change_type: 1,
             },
             success : function (result){
                 if(result){

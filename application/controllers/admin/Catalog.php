@@ -13,7 +13,7 @@ Class Catalog extends MY_Controller {
 		$input['order'] = array('position','ASC');
 		$list_catalog = $this->catalog_model->get_list($input);
 		$this->data['list_catalog'] = $list_catalog;
-
+		$this->data['type'] = 1;
 		$this->data['temp'] = 'admin/catalog/index';
 		$this->load->view('admin/layout', $this->data);
 	}

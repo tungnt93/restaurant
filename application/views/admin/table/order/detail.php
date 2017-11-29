@@ -111,7 +111,7 @@
                     data : {
                         product_id: product_id,
                         quantity: quantity,
-                        table_id: table_id
+                        table_id: table_id,
                     },
                     success : function (result){
                         if(result){

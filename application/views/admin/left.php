@@ -33,6 +33,7 @@
                         <ul class="nav child_menu">
                             <li><a href="<?php echo admin_url('finance/cashier')?>">Thu ngân</a></li>
                             <li><a href="<?php echo admin_url('finance/report')?>">Các khoản thu chi</a></li>
+                            <li><a href="<?php echo admin_url('finance/request')?>">Đề xuất mua sắm</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-cutlery" aria-hidden="true"></i>Quản lý bàn <span class="fa fa-chevron-down"></span></a>
@@ -52,14 +53,17 @@
                     </li>
                     <li><a><i class="fa fa-fire" aria-hidden="true"></i>Quản lý bếp <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?php echo admin_url('food')?>">Thực phẩm</a></li>
+                            <li><a href="<?php echo admin_url('kitchen/order')?>">Danh sách order</a></li>
                             <li><a href="<?php echo admin_url('kitchen/product')?>">Sản phẩm</a></li>
+                            <li><a href="<?php echo admin_url('kitchen/catalog')?>">Phân loại</a></li>
+                            <li><a href="<?php echo admin_url('food')?>">Thực phẩm</a></li>
                             <li><a href="<?php echo admin_url('kitchen/daily_menu')?>">Thực đơn hàng ngày</a></li>
-                            <li><a href="<?php echo admin_url('timesheets')?>">Dụng cụ nhà bếp</a></li>
+                            <li><a href="<?php echo admin_url('kitchen/utensil')?>">Dụng cụ nhà bếp</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-beer" aria-hidden="true"></i>Quản lý bar <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
+                            <li><a href="<?php echo admin_url('bar/order')?>">Danh sách order</a></li>
                             <li><a href="<?php echo admin_url('bar/product')?>">Sản phẩm</a></li>
                             <li><a href="<?php echo admin_url('bar/catalog')?>">Phân loại</a></li>
                             <li><a href="<?php echo admin_url('bar/ingredients')?>">Nguyên liệu</a>
@@ -88,10 +92,10 @@
                     </li>
                     <li><a><i class="fa fa-file-text-o" aria-hidden="true"></i> Quản lý website<span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a>Món ăn <span class="fa fa-chevron-down"></span></a>
+                            <li><a>Sản phẩm <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="<?php echo admin_url('product')?>"> Món ăn</a></li>
-                                    <li><a href="<?php echo admin_url('catalog')?>"> Phân loại</a></li>
+                                    <li><a href="<?php echo admin_url('product')?>"> Sản phẩm</a></li>
+                                    <li><a href="<?php echo admin_url('catalog')?>"> Thể loại</a></li>
                                 </ul>
                             </li>
                             <li><a href="<?php echo admin_url('user')?>">Tài khoản</a></li>

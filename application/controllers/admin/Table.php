@@ -147,7 +147,7 @@ Class Table extends MY_Controller {
             }
 //            pre($products);
             $this->data['products'] = $products;
-
+            $this->data['type'] = 0;
             $this->data['temp'] = 'admin/table/order/detail';
             $this->load->view('admin/layout', $this->data);
         }
@@ -238,6 +238,7 @@ Class Table extends MY_Controller {
         $order_id = $this->input->post('order_id');
         $table_id = $this->input->post('table_id');
         $change_type = $this->input->post('change_type');
+        $type = $this->input->post('type');
         $dataUpdate = array(
             'status'=>$change_type
         );
@@ -341,26 +342,27 @@ Class Table extends MY_Controller {
         $orders = $this->order_model->get_list($input);
 
         $orders = array_merge($order_undo, $orders);
-
         $this->data['orders'] = $orders;
-
+        // $this->data['type'] = 0;
+        $this->session->set_userdata('type', 0);
         $this->data['temp'] = 'admin/table/order/queue';
         $this->load->view('admin/layout', $this->data);
     }
 
     function getQueue(){
-        $input = array();
-        $input['where']['status'] = 2;
-        $input['or_where']['status'] = 4;
-        $input['order'] = array('edited','DESC');
-        $input['limit'] = array('4' ,'0');
-        $order_undo = $this->order_model->get_list($input);
-
-        $input = array();
-        $input['where']['status'] = 1;
-        $input['or_where']['status'] = 3;
-        $input['order'] = array('id','ASC');
-        $orders = $this->order_model->get_list($input);
+        // $input = array();
+        // $input['where']['status'] = 2;
+        // $input['or_where']['status'] = 4;
+        // $input['order'] = array('edited','DESC');
+        // $input['limit'] = array('4' ,'0');
+        // $order_undo = $this->order_model->get_list($input);
+        $order_undo = $this->order_model->get_order_undo($this->session->userdata('type'));
+        // $input = array();
+        // $input['where']['status'] = 1;
+        // $input['or_where']['status'] = 3;
+        // $input['order'] = array('id','ASC');
+        // $orders = $this->order_model->get_list($input);
+        $orders = $this->order_model->get_order($this->session->userdata('type'));
         $orders = array_merge($order_undo, $orders);
 
         $this->data['orders'] = $orders;

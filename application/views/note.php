@@ -18,3 +18,12 @@ Thực đơn hàng ngày
 Dụng cụ nhà bếp:
     -	List ra danh sách dụng cụ
     -	Thêm yêu cầu mua dụng cụ mới
+
+Quy trình gọi món:
+    -   nhân viên chọn món, order được phân về các bộ phận bếp, bar
+    -   bộ phận bếp/bar tiếp nhận và xử lý
+
+Yêu cầu mua sắm thiết bị, dụng cụ
+    -   Các bộ phận gửi yêu cầu lên bộ phận quản lý tài chính
+    -   Bộ phận tài chính xét duyệt yêu cầu:
+        •	Nếu ok => mua sắm và gửi về các bộ phận

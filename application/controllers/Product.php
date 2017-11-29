@@ -5,7 +5,7 @@ Class Product extends MY_Controller {
 		$this->load->model('product_model');
 		$this->load->model('catalog_model');
 	}
-	
+
 	function detail($name = '', $id = '') {
 		$product_id = $id;
 		$product = $this->product_model->get_info($product_id);
@@ -14,11 +14,12 @@ Class Product extends MY_Controller {
 			$this->product_model->update($product_id, array('view'=>$view));
 		}
 		//pre($product);
-		$list_hot = $this->hot_product_model->get_list();
-	    $list_hot_id = array();
-	    foreach ($list_hot as $value) {
-	    	$list_hot_id[] = $value->product_id;
-	    }
+		// $list_hot = $this->hot_product_model->get_list();
+	    // $list_hot_id = array();
+	    // foreach ($list_hot as $value) {
+	    // 	$list_hot_id[] = $value->product_id;
+	    // }
+		
 	    $this->data['list_hot_id'] = $list_hot_id;
 		$this->data['product'] = $product;
 		$this->data['temp'] = 'site/product/detail';
@@ -38,10 +39,10 @@ Class Product extends MY_Controller {
 				$breadcrumb_catalog = $breadcrumb_catalog.','.$g_parent->id;
 			}
 		}
-		
+
 		//$list_product = array();
 		$list_cat = array();
-		$list_cat[] = $catalog_id; 
+		$list_cat[] = $catalog_id;
 		$input['where']['parent_id'] = $catalog_id;
 		$list = $this->catalog_model->get_list($input);
 		if(count($list > 0)){

@@ -5,8 +5,11 @@ Class Bar extends MY_Controller {
         $this->load->model('catalog_model');
         $this->load->model('product_model');
         $this->load->model('food_model');
+        $this->load->model('order_model');
+        $this->load->model('table_model');
         $this->load->model('ingredients_model');
         $this->load->model('dailyMenu_model');
+        $this->load->model('utensils_model');
     }
 
     function ingredients() {
@@ -369,5 +372,27 @@ Class Bar extends MY_Controller {
             $daily_menus[$key]->menu = $this->catalog_model->get_info($product->catalog_id)->name;
         }
         return $this->load->view('admin/kitchen/daily_menu/tb_daily_menu', array('daily_menus'=>$daily_menus));
+    }
+
+    function order(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+        $order_undo = $this->order_model->get_order_undo(2);
+        $orders = $this->order_model->get_order(2);
+        $orders = array_merge($order_undo, $orders);
+        $this->data['orders'] = $orders;
+        $this->session->set_userdata('type', 2);
+        $this->data['temp'] = 'admin/table/order/queue';
+        $this->load->view('admin/layout', $this->data);
+    }
+
+    function utensil(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+        $this->data['type'] = 2;
+        $utensils = $this->utensils_model->get_list(array('where'=>array('type'=> 2)));
+        $this->data['utensils'] = $utensils;
+        $this->data['temp'] = 'admin/warehouse/utensil/index';
+        $this->load->view('admin/layout', $this->data);
     }
 }
