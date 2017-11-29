@@ -202,10 +202,11 @@ Class Table extends MY_Controller {
         else{
             $updateTable = array('status'=>1, 'bill_id'=>0);
             $updateBill = array('status'=>5);
-            $this->table_model->update($updateTable);
-            $this->bill_model->update($updateBill);
+            $this->table_model->update($table_id, $updateTable);
+            $this->bill_model->update($table->bill_id, $updateBill);
             echo true;
         }
+        // echo $table_id;
     }
 
     function addOrder(){

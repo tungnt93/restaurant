@@ -1,5 +1,13 @@
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
-<?php $this->load->view('admin/kitchen/header')?>
+<div class="page-title">
+    <div class="title_left"><h3>Xây dựng thực đơn</h3></div>
+    <div class="title_right">
+        <div class="col-md-9 col-sm-9 col-xs-12 pull-right">
+            <a href="<?php echo admin_url('kitchen/add_product')?>" class="btn btn-primary btn-sm">Thêm mới</a>
+            <a href="<?php echo admin_url('kitchen/product')?>" class="btn btn-info btn-sm">Danh sách</a>
+        </div>
+    </div>
+</div>
 <div class="x_panel">
     <div class="x_title">
         <h2>Nhập các thông tin</h2>
@@ -22,13 +30,13 @@
         <div class="row">
             <form id="formAddProduct" data-parsley-validate class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Tên sản phẩm <span class="required">*</span></label>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Tên món ăn <span class="required">*</span></label>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <input type="text" id="txtName" name="txtName" value="" required="required" class="form-control col-md-7 col-xs-12">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Thể loại <span class="required">*</span></label>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Menu <span class="required">*</span></label>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <select class="select2_multiple form-control" name="slCatalog">
                             <?php foreach ($list_catalog as $r) { ?>
@@ -59,7 +67,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-4" style="text-align: left;">Đơn vị</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-4" style="text-align: left;">Khối lượng</label>
                     <div class="col-md-1 col-sm-1 col-xs-8">
                         <input type="number" id="txtQuantity" name="txtQuantity" step="0.01" value="" class="form-control col-md-7 col-xs-12">
                     </div>
@@ -73,7 +81,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 20px">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2" style="width: 70px">
-                        <input type="submit" id="btnAddProduct" name="btnAddProduct" required="required" class="btn btn-success" value="Thêm sản phẩm">
+                        <input type="submit" id="btnAddProduct" name="btnAddProduct" required="required" class="btn btn-success" value="Thêm món">
                     </div>
                 </div>
             </form>
@@ -119,14 +127,13 @@
                     },
                     success : function (result){
                         console.log(result);
-                        if(result){
-                          result = JSON.parse(result);
+                        if(result > 0){
                             $('#list_nl').append(
                                 '<div class="nl_'+ result +'">' +
                                 '<div class="col-md-4 col-sm-4 col-xs-5">' + name + '</div>' +
-                                '<div class="col-md-4 col-sm-4 col-xs-5">' + quantity + result.dram + '</div>' +
+                                '<div class="col-md-4 col-sm-4 col-xs-5">' + quantity + 'kg</div>' +
                                 '<div class="col-md-4 col-sm-4 col-xs-2">' +
-                                '<div class="btn btn-danger btn-xs" onclick="del_nl('+ result.id +')">Xóa</div>' +
+                                '<div class="btn btn-danger btn-xs" onclick="del_nl('+ result +')">Xóa</div>' +
                                 '</div>' +
                                 '<div>'
                             );

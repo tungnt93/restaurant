@@ -1,5 +1,13 @@
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
-<?php $this->load->view('admin/kitchen/header')?>
+<div class="page-title">
+    <div class="title_left"><h3>Món ăn</h3></div>
+    <div class="title_right">
+        <div class="col-md-9 col-sm-9 col-xs-12 pull-right">
+            <a href="<?php echo admin_url('kitchen/add_product')?>" class="btn btn-primary btn-sm">Thêm mới</a>
+            <a href="<?php echo admin_url('kitchen/product')?>" class="btn btn-info btn-sm">Danh sách</a>
+        </div>
+    </div>
+</div>
 <div class="x_panel">
     <div class="x_title">
         <h2>Danh sách</h2>
@@ -25,7 +33,7 @@
                 <th>Mã số</th>
                 <th>Tên món</th>
                 <th>Ảnh minh họa</th>
-                <th>Thể loại</th>
+                <th>Menu</th>
                 <th>Thực phẩm chính</th>
                 <th>Hành động</th>
             </tr>
@@ -52,8 +60,7 @@
                         <?php }?>
                     </td>
                     <td>
-                        <a href="<?php echo $type == 1 ? admin_url('kitchen/edit_product/'.$value->id) : admin_url('bar/edit_product/'.$value->id)?>" 
-                          class="btn btn-xs btn-primary">Sửa</a>
+                        <a href="<?php echo admin_url('kitchen/edit_product/'.$value->id)?>" class="btn btn-xs btn-primary">Sửa</a>
                         <a onclick="delCatalog(<?php echo $value->id?>)" class="btn btn-xs btn-danger">Xóa</a>
                     </td>
                 </tr>

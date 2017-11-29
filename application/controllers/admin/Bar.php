@@ -1,5 +1,5 @@
 <?php
-Class Kitchen extends MY_Controller {
+Class Bar extends MY_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('catalog_model');
@@ -9,27 +9,109 @@ Class Kitchen extends MY_Controller {
         $this->load->model('dailyMenu_model');
     }
 
-    function index() {
-        $message = $this->session->flashdata('message');
-        $this->data['message'] = $message;
+    function ingredients() {
+      $message = $this->session->flashdata('message');
+      $this->data['message'] = $message;
+      $input = array();
+      $input['where']['type'] = 2;
+      $foods = $this->food_model->get_list($input);
+      $this->data['foods'] = $foods;
 
+      $this->data['temp'] = 'admin/bar/ingredient/index';
+      $this->load->view('admin/layout', $this->data);
+    }
 
-        $this->data['temp'] = 'admin/kitchen/index';
-        $this->load->view('admin/layout', $this->data);
+    function catalog(){
+      $message = $this->session->flashdata('message');
+  	  $this->data['message'] = $message;
+  		$input = array();
+  		$input['order'] = array('position','ASC');
+      $input['where']['type'] = 2;
+  		$list_catalog = $this->catalog_model->get_list($input);
+  		$this->data['list_catalog'] = $list_catalog;
+      $this->data['type'] = 2;
+  		$this->data['temp'] = 'admin/catalog/index';
+  		$this->load->view('admin/layout', $this->data);
+    }
+
+    function add_catalog(){
+      $message = $this->session->flashdata('message');
+      $this->data['message'] = $message;
+			if($this->input->post('btnAddCatalog')){
+					$name = $this->input->post('txtName');
+					$position = $this->input->post('txtPosition');
+            //upload images
+          $config['upload_path'] = './public/images/menu';
+          $config['allowed_types'] = 'jpg|png|JPG|PNG';
+
+          $this->load->library("upload", $config);
+          if($this->upload->do_upload('imageMenu')){
+              $img_data = $this->upload->data();
+              $img = $img_data['file_name'];
+              $dataSubmit = array(
+                  'name'		=> $name,
+                  'position'	=> $position,
+                  'img'       => $img,
+                  'type' => 2
+              );
+              if($this->catalog_model->create($dataSubmit)){
+                  $this->session->set_flashdata('message','Thêm thành công');
+                  redirect(base_url('admin/bar/catalog'));
+              }
+              else{
+                  $this->session->set_flashdata('message', 'Thêm thất bại!');
+                  redirect(base_url('admin/bar/add_catalog'));
+              }
+          }
+          else{
+              $this->session->set_flashdata('message', $this->upload->display_errors());
+              redirect(base_url('admin/bar/add_catalog'));
+          }
+			}
+      $this->data['type'] = 2;
+      $this->data['temp'] = 'admin/catalog/add';
+      $this->load->view('admin/layout', $this->data);
+    }
+
+    function add_ing(){
+      $message = $this->session->flashdata('message');
+      $this->data['message'] = $message;
+      if($this->input->post('btnAdd')){
+          $data = array(
+              'name' => $this->input->post('txtName'),
+              'catalog_id' => $this->input->post('slCatalog'),
+              'dram' => $this->input->post('txtDram'),
+              'type' => 2
+          );
+          if($this->food_model->create($data)){
+              $this->session->set_flashdata('message','Thêm thành công!');
+              redirect(base_url('admin/bar/add_ing'));
+          }
+          else{
+              $this->session->set_flashdata('message','Thêm thất bại!');
+              redirect(base_url('admin/bar/add_ing'));
+          }
+      }
+      $input = array();
+      $input['where']['type'] = 2;
+      $catalogs = $this->catalog_model->get_list($input);
+      $this->data['catalogs'] = $catalogs;
+      $this->data['temp'] = 'admin/bar/ingredient/add';
+      $this->load->view('admin/layout', $this->data);
     }
 
     function product(){
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
 
-        $list_product = $this->product_model->get_list(array('where'=>array('type'=>1)));
+        $list_product = $this->product_model->get_list(array('where'=>array('type'=>2)));
         foreach ($list_product as $key => $value){
             $input = array();
             $input['where']['product_id'] = $value->id;
             $list_product[$key]->ing = $this->ingredients_model->get_list($input);
         }
         $this->data['list_product'] = $list_product;
-        $this->data['type'] = 1;
+        $this->data['type'] = 2;
         $this->data['temp'] = 'admin/kitchen/product';
         $this->load->view('admin/layout', $this->data);
     }
@@ -38,7 +120,7 @@ Class Kitchen extends MY_Controller {
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
 
-        $list_catalog = $this->catalog_model->get_list(array('where'=>array('type'=>1)));
+        $list_catalog = $this->catalog_model->get_list(array('where'=>array('type'=>2)));
         $foods = array();
         foreach ($list_catalog as $key => $value){
             $foods[$key] = new stdClass();
@@ -62,18 +144,18 @@ Class Kitchen extends MY_Controller {
                     'view'			=> 0,
                     'create_time' 	=> $now,
                     'status'        => 0,
-                    'type'  => 1
+                    'type'  => 2
                 );
                 $product_id = $this->product_model->create($dataSubmit);
                 if($product_id > 0){
                     $this->session->set_flashdata('message', 'Thêm sản phẩm thành công!');
                     $update_nl = array('product_id'=>$product_id);
                     $this->ingredients_model->update_rule(array('product_id'=> 0), $update_nl);
-                    redirect(base_url('admin/kitchen/product'));
+                    redirect(base_url('admin/bar/product'));
                 }
                 else{
                     $this->session->set_flashdata('message', 'Thêm sản phẩm thất bại!');
-                    redirect(base_url('admin/kitchen/add_product'));
+                    redirect(base_url('admin/bar/add_product'));
                 }
             }
             else {
@@ -86,7 +168,7 @@ Class Kitchen extends MY_Controller {
         $this->ingredients_model->del_rule(array('product_id'=> 0));
         $this->data['list_catalog'] = $list_catalog;
         $this->data['foods'] = $foods;
-        $this->data['type'] = 1;
+        $this->data['type'] = 2;
         $this->data['temp'] = 'admin/kitchen/add_product';
         $this->load->view('admin/layout', $this->data);
     }
@@ -167,18 +249,18 @@ Class Kitchen extends MY_Controller {
             );
             if($this->product_model->update($product_id, $dataSubmit)){
                 $this->session->set_flashdata('message', 'Sửa thông tin sản phẩm thành công!');
-                redirect(base_url('admin/kitchen/product'));
+                redirect(base_url('admin/bar/product'));
             }
             else{
                 $this->session->set_flashdata('message', 'Sửa thông tin sản phẩm thất bại!');
-                redirect(base_url('admin/kitchen/product'));
+                redirect(base_url('admin/bar/product'));
             }
 
         }
         $this->ingredients_model->del_rule(array('product_id'=> 0));
         $this->data['foods'] = $foods;
         $this->data['list_catalog'] = $list_catalog;
-        $this->data['type'] = 1;
+        $this->data['type'] = 2;
         $this->data['temp'] = 'admin/kitchen/edit_product';
         $this->load->view('admin/layout', $this->data);
     }
@@ -187,7 +269,7 @@ Class Kitchen extends MY_Controller {
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
 
-        $list_catalog = $this->catalog_model->get_list(array('where'=>array('type'=>1)));
+        $list_catalog = $this->catalog_model->get_list(array('where'=>array('type'=>2)));
         $products = array();
         foreach ($list_catalog as $key => $value){
             $products[$key] = new stdClass();
@@ -197,7 +279,7 @@ Class Kitchen extends MY_Controller {
             $products[$key]->product = $this->product_model->get_list($input);
         }
         $this->data['products'] = $products;
-        $this->data['type'] = 1;
+        $this->data['type'] = 2;
         $this->data['temp'] = 'admin/kitchen/daily_menu/daily_menu';
         $this->load->view('admin/layout', $this->data);
     }
@@ -240,17 +322,11 @@ Class Kitchen extends MY_Controller {
 
     function getDailyMenu(){
         $date = $this->input->post('date');
-        $type = $this->input->post('type');
         $daily_menus = $this->dailyMenu_model->get_list(array('where'=>array('date'=>$date)));
         foreach ($daily_menus as $key => $value){
             $product = $this->product_model->get_info($value->product_id);
-            if($product->type != $type){
-                unset($daily_menus[$key]);
-            }
-            else{
-              $daily_menus[$key]->name = $product->name;
-              $daily_menus[$key]->menu = $this->catalog_model->get_info($product->catalog_id)->name;
-            }
+            $daily_menus[$key]->name = $product->name;
+            $daily_menus[$key]->menu = $this->catalog_model->get_info($product->catalog_id)->name;
         }
         return $this->load->view('admin/kitchen/daily_menu/tb_daily_menu', array('daily_menus'=>$daily_menus));
     }

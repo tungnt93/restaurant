@@ -3,9 +3,9 @@
 
     <div class="title_left"><h3>Thông tin order</h3></div>
     <div class="title_right">
-        <div class="col-md-7 col-sm-7 col-xs-12 pull-right">
+        <div class="<?php echo (isset($table) && $table->status == 2) ? 'col-md-7 col-sm-7' : 'col-md-4 col-sm-4' ?>  col-xs-12 pull-right">
             <a href="<?php echo admin_url('table/order') ?>" class="btn btn-info btn-sm">Danh sách</a>
-            <?php if(isset($table)){ ?>
+            <?php if(isset($table) && $table->status == 2){ ?>
                 <a href="<?php echo admin_url('table/payment/'.$table->id) ?>" class="btn btn-primary btn-sm">Thanh toán</a>
                 <a onclick="closeTable(<?php echo $table->id?>)" class="btn btn-danger btn-sm">Hủy bàn</a>
             <?php }?>

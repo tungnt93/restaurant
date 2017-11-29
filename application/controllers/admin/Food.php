@@ -9,7 +9,9 @@ Class Food extends MY_Controller {
     function index() {
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
-        $foods = $this->food_model->get_list();
+        $input = array();
+        $input['where']['type'] = 1;
+        $foods = $this->food_model->get_list($input);
         $this->data['foods'] = $foods;
 
         $this->data['temp'] = 'admin/food/index';
@@ -24,6 +26,7 @@ Class Food extends MY_Controller {
                 'name' => $this->input->post('txtName'),
                 'catalog_id' => $this->input->post('slCatalog'),
                 'dram' => $this->input->post('txtDram'),
+                'type' => 1
             );
             if($this->food_model->create($data)){
                 $this->session->set_flashdata('message','Thêm thành công!');
@@ -34,7 +37,9 @@ Class Food extends MY_Controller {
                 redirect(base_url('admin/food/add'));
             }
         }
-        $catalogs = $this->catalog_model->get_list();
+        $input = array();
+        $input['where']['type'] = 1;
+        $catalogs = $this->catalog_model->get_list($input);
         $this->data['catalogs'] = $catalogs;
         $this->data['temp'] = 'admin/food/add';
         $this->load->view('admin/layout', $this->data);

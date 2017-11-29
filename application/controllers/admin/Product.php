@@ -7,7 +7,7 @@ Class Product extends MY_Controller {
 		$this->load->model('food_model');
         $this->load->model('ingredients_model');
 	}
-	
+
 	function index() {
 		$message = $this->session->flashdata('message');
 	    $this->data['message'] = $message;
@@ -90,7 +90,12 @@ Class Product extends MY_Controller {
             'weigh' => $quantity
         );
 	    $id = $this->ingredients_model->create($data);
-        echo $id;
+			if($id > 0){
+					$food = $this->food_model->get_info($food_id);
+					echo json_encode(array('id'=>$food_id, 'dram'=>$food->dram));
+			}
+			else
+        echo false;
     }
 
 	function format_img($img, $rotate){
@@ -114,7 +119,7 @@ Class Product extends MY_Controller {
         $thumb_img = implode('.', $thumb_img);
 
         $config_img['source_image'] = './public/images/product/'.$thumb_img;
-        
+
         switch ($rotate) {
         	case 90:
         		$rotate = 270;
@@ -192,8 +197,8 @@ Class Product extends MY_Controller {
 			if($changeImg == 1){
 				$config['upload_path'] = './public/images/product';
 	            $config['allowed_types'] = 'gif|jpg|png';
-	            
-	            
+
+
 	            $this->load->library("upload", $config);
 	            if($this->upload->do_upload('imageProduct')){
 	            	$old_img = './public/images/product/'.$product->img_link;

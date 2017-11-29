@@ -1,6 +1,13 @@
 <script language="javascript" src="<?php echo base_url('public')?>/ckeditor/ckeditor.js" type="text/javascript"></script>
-<?php $this->load->view('admin/kitchen/header')?>
-
+<div class="page-title">
+    <div class="title_left"><h3>Chỉnh sửa thông tin sản phẩm</h3></div>
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 pull-right">
+            <a href="<?php echo admin_url('kitchen/add_product')?>" class="btn btn-primary btn-sm">Thêm mới</a>
+            <a href="<?php echo admin_url('kitchen/product')?>" class="btn btn-info btn-sm">Danh sách</a>
+        </div>
+    </div>
+</div>
 <?php if ($message){$this->load->view('admin/message',$this->data); }?>
 <div class="row">
     <form id="formAddProduct" data-parsley-validate class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">

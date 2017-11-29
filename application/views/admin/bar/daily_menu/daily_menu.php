@@ -5,8 +5,8 @@
     <div class="title_left"><h3>Thực đơn hàng ngày</h3></div>
     <div class="title_right">
         <div class="col-md-9 col-sm-9 col-xs-12 pull-right">
-            <a href="<?php echo $type == 1 ? admin_url('kitchen/add_daily_menu') : admin_url('bar/add_daily_menu') ?>" class="btn btn-primary btn-sm">Thêm mới</a>
-            <a href="<?php echo $type == 1 ? admin_url('kitchen/daily_menu') : admin_url('bar/daily_menu') ?>" class="btn btn-info btn-sm">Danh sách</a>
+            <a href="<?php echo admin_url('kitchen/add_daily_menu') ?>" class="btn btn-primary btn-sm">Thêm mới</a>
+            <a href="<?php echo admin_url('kitchen/daily_menu') ?>" class="btn btn-info btn-sm">Danh sách</a>
         </div>
     </div>
 </div>
@@ -68,8 +68,7 @@
                 type : "post",
                 dataType:"text",
                 data : {
-                    date: date,
-                    type: <?php echo $type ?>
+                    date: date
                 },
                 success : function (result){
                     if(result){

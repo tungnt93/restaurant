@@ -5,10 +5,10 @@ Class Catalog extends MY_Controller {
 		$this->load->model('catalog_model');
 		$this->load->model('product_model');
 	}
-	
+
 	function index() {
 		$message = $this->session->flashdata('message');
-	    $this->data['message'] = $message;
+	  $this->data['message'] = $message;
 		$input = array();
 		$input['order'] = array('position','ASC');
 		$list_catalog = $this->catalog_model->get_list($input);
@@ -19,38 +19,38 @@ Class Catalog extends MY_Controller {
 	}
 
 	function add(){
-        $message = $this->session->flashdata('message');
-        $this->data['message'] = $message;
-		if($this->input->post('btnAddCatalog')){
-			$name = $this->input->post('txtName');
-			$position = $this->input->post('txtPosition');
+      $message = $this->session->flashdata('message');
+      $this->data['message'] = $message;
+			if($this->input->post('btnAddCatalog')){
+					$name = $this->input->post('txtName');
+					$position = $this->input->post('txtPosition');
             //upload images
-            $config['upload_path'] = './public/images/menu';
-            $config['allowed_types'] = 'jpg|png|JPG|PNG';
+          $config['upload_path'] = './public/images/menu';
+          $config['allowed_types'] = 'jpg|png|JPG|PNG';
 
-            $this->load->library("upload", $config);
-            if($this->upload->do_upload('imageMenu')){
-                $img_data = $this->upload->data();
-                $img = $img_data['file_name'];
-                $dataSubmit = array(
-                    'name'		=> $name,
-                    'position'	=> $position,
-                    'img'       => $img,
-                );
-                if($this->catalog_model->create($dataSubmit)){
-                    $this->session->set_flashdata('message','Thêm danh mục thành công');
-                    redirect(base_url('admin/catalog'));
-                }
-                else{
-                    $this->session->set_flashdata('message', 'Thêm sản phẩm thất bại!');
-                    redirect(base_url('admin/catalog/add'));
-                }
-            }
-            else{
-                $this->session->set_flashdata('message', $this->upload->display_errors());
-                redirect(base_url('admin/catalog/add'));
-            }
-		}
+          $this->load->library("upload", $config);
+          if($this->upload->do_upload('imageMenu')){
+              $img_data = $this->upload->data();
+              $img = $img_data['file_name'];
+              $dataSubmit = array(
+                  'name'		=> $name,
+                  'position'	=> $position,
+                  'img'       => $img,
+              );
+              if($this->catalog_model->create($dataSubmit)){
+                  $this->session->set_flashdata('message','Thêm danh mục thành công');
+                  redirect(base_url('admin/catalog'));
+              }
+              else{
+                  $this->session->set_flashdata('message', 'Thêm sản phẩm thất bại!');
+                  redirect(base_url('admin/catalog/add'));
+              }
+          }
+          else{
+              $this->session->set_flashdata('message', $this->upload->display_errors());
+              redirect(base_url('admin/catalog/add'));
+          }
+			}
 		$this->data['temp'] = 'admin/catalog/add';
 		$this->load->view('admin/layout', $this->data);
 	}

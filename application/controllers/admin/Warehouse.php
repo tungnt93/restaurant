@@ -17,7 +17,18 @@ Class Warehouse extends MY_Controller {
         $this->data['foods'] = $foods;
 //        pre($foods);
         $utensils = $this->utensils_model->get_list();
-        $this->data['utensils'] = $utensils;
+        $kitchen_utensils = array();
+        $bar_utensils = array();
+        foreach ($utensils as $key => $value) {
+            if($value->type == 2){
+              $kitchen_utensils[] = $value;
+            }
+            else{
+              $bar_utensils[] = $value;
+            }
+        }
+        $this->data['kitchen_utensils'] = $kitchen_utensils;
+        $this->data['bar_utensils'] = $bar_utensils;
         $this->data['temp'] = 'admin/warehouse/index';
         $this->load->view('admin/layout', $this->data);
     }
@@ -203,8 +214,8 @@ Class Warehouse extends MY_Controller {
                 echo '</optgroup>';
             }
         }
-        else if($type == 2){
-            $untensils = $this->utensils_model->get_list();
+        else if($type == 2 || $type == 3){
+            $untensils = $this->utensils_model->get_list(array('where'=>array('type'=>$type - 1)));
             foreach ($untensils as $row){
                 echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
             }
