@@ -55,9 +55,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="divUtensils">
-
-                </div>
+                <div class="divUtensils"></div>
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Số lượng<span class="required">*</span></label>
                     <div class="col-md-1 col-sm-1 col-xs-6">
@@ -87,7 +85,7 @@
     $(document).ready(function () {
         $('#slItem').change(function () {
             var type = $('#slType').val();
-            if($(this).val() === '0' && type === '2'){
+            if($(this).val() === '0' && (type === '2' || type === '3')){
                 $('.divUtensils').append(
                     '<div class="form-group">' +
                     '<label class="control-label col-md-2 col-sm-2 col-xs-12">Nhập tên<span class="required">*</span></label>' +

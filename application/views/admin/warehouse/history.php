@@ -6,7 +6,7 @@
         <select class="form-control" name="slType" id="slType">
             <option value="1">Kho thực phẩm</option>
             <option value="2">Dụng cụ nhà bếp</option>
-            <option value="2">Dụng cụ quầy bar</option>
+            <option value="3">Dụng cụ quầy bar</option>
         </select>
     </div>
 </div>

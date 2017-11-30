@@ -77,7 +77,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-shopping-basket" aria-hidden="true"></i> Quản lý kho <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-shopping-basket" aria-hidden="true"></i> Quản lý kho, dụng cụ <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="<?php echo admin_url('warehouse')?>">Thông tin kho</a></li>
                             <li><a href="<?php echo admin_url('warehouse/history')?>">Lịch sử</a></li>

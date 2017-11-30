@@ -6,6 +6,7 @@ Class Home extends MY_Controller {
 		$this->load->model('content_model');
 		$this->load->model('sale_model');
 		$this->load->model('catalog_model');
+		$this->load->model('book_model');
 	}
 
 	function index() {
@@ -76,8 +77,6 @@ Class Home extends MY_Controller {
 	        	$offset -= 1;
 	        	$offset = $offset*$per_page;
 	        }
-
-
 	        $input['limit'] = array($per_page, $offset);
 	        $list_product = $this->product_model->get_list($input);
 	        $this->data['list_product'] = $list_product;
@@ -86,6 +85,43 @@ Class Home extends MY_Controller {
 			$this->data['total'] = $total;
 			$this->data['temp'] = 'site/product/search';
 			$this->load->view('site/layout', $this->data);
+		}
+	}
+
+	function book(){
+		$message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+		// if($this->input->post('btnBook')){
+        //
+		// }
+		$this->data['temp'] = 'site/book/index';
+		$this->load->view('site/layout', $this->data);
+	}
+
+	function actionBook(){
+		$c_name = $this->input->post('txtName');
+		$c_phone = $this->input->post('txtPhone');
+		$number = $this->input->post('txtNumber');
+		$time = $this->input->post('txtTime');
+		$message = $this->input->post('txtMessage');
+		if($c_name != '' && $c_phone != '' && $number != '' && $time != ''){
+			echo $c_name;
+			$dataSubmit = array(
+				'c_name'	=> $c_name,
+				'c_phone'	=> $c_phone,
+				'number'	=> $number,
+				'time'		=> $time,
+				'message'	=> $message
+			);
+			if($this->book_model->create($dataSubmit)){
+				echo 1;
+			}
+			else{
+				echo 0;
+			}
+		}
+		else{
+			echo 111;
 		}
 	}
 }

@@ -21,10 +21,10 @@ $(document).ready(function(){
 	//     	});
 	//     }
 	$(window).scroll(function() {
-	    if ($(this).scrollTop() >= 200) { 
-	        $('#back_to_top').fadeIn(200); 
+	    if ($(this).scrollTop() >= 200) {
+	        $('#back_to_top').fadeIn(200);
 	    } else {
-	        $('#back_to_top').fadeOut(200); 
+	        $('#back_to_top').fadeOut(200);
 	    }
 	    // if($(this).scrollTop() > nav_to_top){
 	    // 	$('.navigation-menu').css({
@@ -46,9 +46,11 @@ $(document).ready(function(){
 	    // 	});
 	    // }
 	});
-	$('#back_to_top').click(function() {   
+	$('#back_to_top').click(function() {
 	    $('body,html').animate({
-	        scrollTop : 0       
+	        scrollTop : 0
 	    }, 500);
 	});
+
+	
 });

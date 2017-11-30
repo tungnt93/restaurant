@@ -9,6 +9,7 @@ Class Table extends MY_Controller {
         $this->load->model('bill_model');
         $this->load->model('dailyMenu_model');
         $this->load->model('product_model');
+        $this->load->model('book_model');
     }
 
     function index() {
@@ -396,6 +397,9 @@ Class Table extends MY_Controller {
     function book(){
         $message = $this->session->flashdata('message');
         $this->data['message'] = $message;
+
+        $books = $this->book_model->get_list();
+        $this->data['books'] = $books;
 
         $this->data['temp'] = 'admin/table/book';
         $this->load->view('admin/layout', $this->data);

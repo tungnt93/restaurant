@@ -15,7 +15,7 @@
         if($value->type == 1){
             $item = $this->food_model->get_info($value->item_id);
         }
-        else if($value->type == 2){
+        else if($value->type == 2 || $value->type == 3){
             $item = $this->utensils_model->get_info($value->item_id);
         }?>
         <tr>

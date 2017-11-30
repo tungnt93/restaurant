@@ -7,6 +7,8 @@ Class Finance extends MY_Controller {
         $this->load->model('bill_model');
         $this->load->model('table_model');
         $this->load->model('order_model');
+        $this->load->model('request_model');
+        $this->load->model('employee_model');
     }
 
     function index() {
@@ -63,5 +65,24 @@ Class Finance extends MY_Controller {
 
         $this->data['temp'] = 'admin/finance/payment';
         $this->load->view('admin/layout', $this->data);
+    }
+
+    function request(){
+        $message = $this->session->flashdata('message');
+        $this->data['message'] = $message;
+
+        $requests = $this->request_model->get_list();
+        $this->data['requests'] = $requests;
+
+        $this->data['temp'] = 'admin/finance/request';
+        $this->load->view('admin/layout', $this->data);
+    }
+
+    function confirm_request(){
+        $request_id = $this->input->post('request_id');
+        $status = $this->input->post('status');
+        $this->request_model->update($request_id, array('status'=>$status));
+        $requests = $this->request_model->get_list();
+        return $this->load->view('admin/finance/table_request', array('requests'=>$requests));
     }
 }

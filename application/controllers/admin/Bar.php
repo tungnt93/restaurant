@@ -5,11 +5,12 @@ Class Bar extends MY_Controller {
         $this->load->model('catalog_model');
         $this->load->model('product_model');
         $this->load->model('food_model');
-        $this->load->model('order_model');
-        $this->load->model('table_model');
         $this->load->model('ingredients_model');
         $this->load->model('dailyMenu_model');
+        $this->load->model('order_model');
+        $this->load->model('table_model');
         $this->load->model('utensils_model');
+        $this->load->model('request_model');
     }
 
     function ingredients() {
@@ -55,8 +56,7 @@ Class Bar extends MY_Controller {
                   'name'		=> $name,
                   'position'	=> $position,
                   'img'       => $img,
-                  'type' => 2,
-                  'status'  => 2
+                  'type' => 2
               );
               if($this->catalog_model->create($dataSubmit)){
                   $this->session->set_flashdata('message','Thêm thành công');
@@ -376,24 +376,51 @@ Class Bar extends MY_Controller {
     }
 
     function order(){
-        $message = $this->session->flashdata('message');
-        $this->data['message'] = $message;
-        $order_undo = $this->order_model->get_order_undo(2);
-        $orders = $this->order_model->get_order(2);
-        $orders = array_merge($order_undo, $orders);
-        $this->data['orders'] = $orders;
-        $this->session->set_userdata('type', 2);
-        $this->data['temp'] = 'admin/table/order/queue';
-        $this->load->view('admin/layout', $this->data);
-    }
+         $message = $this->session->flashdata('message');
+         $this->data['message'] = $message;
+         $order_undo = $this->order_model->get_order_undo(2);
+         $orders = $this->order_model->get_order(2);
+         $orders = array_merge($order_undo, $orders);
+         $this->data['orders'] = $orders;
+         $this->session->set_userdata('type', 2);
+         $this->data['temp'] = 'admin/table/order/queue';
+         $this->load->view('admin/layout', $this->data);
+     }
 
-    function utensil(){
-        $message = $this->session->flashdata('message');
-        $this->data['message'] = $message;
-        $this->data['type'] = 2;
-        $utensils = $this->utensils_model->get_list(array('where'=>array('type'=> 2)));
-        $this->data['utensils'] = $utensils;
-        $this->data['temp'] = 'admin/warehouse/utensil/index';
-        $this->load->view('admin/layout', $this->data);
-    }
+     function utensil(){
+         $message = $this->session->flashdata('message');
+         $this->data['message'] = $message;
+         $this->data['type'] = 3;
+         $utensils = $this->utensils_model->get_list(array('where'=>array('type'=> 3)));
+         $this->data['utensils'] = $utensils;
+         $requests = $this->request_model->get_list(array('where'=>array('type'=>2)));
+         $this->data['requests'] = $requests;
+         if($this->input->post('btnAdd')){
+             $name = $this->input->post('slItem');
+             if($name == '0'){
+                 $name = $this->input->post('txtNewUtensils');
+             }
+             $quantity = $this->input->post('txtQuantity');
+             $description = $this->input->post('txtDescription');
+             $now = new DateTime();
+             $dataSubmit = array(
+                 'employee_id'  => $this->session->userdata('admin')->employee_id,
+                 'type' => 2,
+                 'status' => 1,
+                 'item_name'    => $name,
+                 'quantity'     => $quantity,
+                 'description'  => $description,
+                 'created'      => $now->getTimestamp()
+             );
+             if($this->request_model->create($dataSubmit) > 0){
+                 $this->session->set_flashdata('message', 'Gửi yêu cầu thành công!');
+             }
+             else{
+                 $this->session->set_flashdata('message', 'Gửi yêu cầu thất bại!');
+             }
+             redirect(base_url('admin/bar/utensil'));
+         }
+         $this->data['temp'] = 'admin/warehouse/utensil/index';
+         $this->load->view('admin/layout', $this->data);
+     }
 }

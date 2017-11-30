@@ -33,12 +33,12 @@
 			</div>
             <nav id="mobile-menu" class="mobile-menu collapse navbar-collapse">
                 <ul class='menu nav navbar-nav'><li class="level0"><a class='' href='<?php echo base_url() ?>'><span>Trang chủ</span></a></li>
-                    <li class="level0"><a class='' href='<?php echo base_url('gioi-thieu').'.html'?>'><span>Giới thiệu</span></a></li>
+                    <li class="level0"><a class='' href='<?php echo base_url('gioi-thieu.html')?>'><span>Giới thiệu</span></a></li>
                     <li class="level0"><a class='' href=''><span>Thực đơn</span></a></li>
-                    <li class="level0"><a class='' href=''><span>Đặt bàn</span></a></li>
-                    <li class="level0"><a class='' href=''><span>Gọi món</span></a></li>
+                    <li class="level0"><a class='' href='<?php echo base_url('dat-ban.html')?>'><span>Đặt bàn</span></a></li>
+                    <li class="level0"><a class='' href='<?php echo base_url('dat-ban.html')?>'><span>Gọi món</span></a></li>
                      <li class="level0"><a class='' href='#'><span>Khuyến mại</span></a></li>
-                    <li class="level0"><a class='' href='<?php echo base_url('lien-he').'.html'?>'><span>Liên hệ</span></a></li>
+                    <li class="level0"><a class='' href='<?php echo base_url('lien-he.html')?>'><span>Liên hệ</span></a></li>
                 </ul class='menu nav navbar-nav'>
             </nav>
 		</div>

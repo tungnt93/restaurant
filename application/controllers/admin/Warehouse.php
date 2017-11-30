@@ -61,7 +61,8 @@ Class Warehouse extends MY_Controller {
                 'create_by'=> $this->data['admin']->id,
                 'created'=> $now->getTimestamp(),
             );
-            if($this->import_model->create($data)){
+            $import_id = $this->import_model->create($data);
+            if($import_id > 0){
                 if($type == 1){
                     $food = $this->food_model->get_info($id);
                     $dataFood = array(
@@ -69,16 +70,18 @@ Class Warehouse extends MY_Controller {
                     );
                     $this->food_model->update($id, $dataFood);
                 }
-                else if($type == 2){
+                else {
                     if($this->input->post('slItem') == 0){
                         $newUtensil = $this->input->post('txtNewUtensils');
                         $newUtensil = array(
                             'name'      => $newUtensil,
                             'quantity'  => $quantity,
                             'status'    => 1,
+                            'type'      => $type,
                             'created'   => $now->getTimestamp()
                         );
-                        $this->utensils_model->create($newUtensil);
+                        $utensil_id = $this->utensils_model->create($newUtensil);
+                        $this->import_model->update($import_id, array('item_id' => $utensil_id));
                     }
                     else{
                         $utensil = $this->utensils_model->get_info($id);
@@ -196,6 +199,7 @@ Class Warehouse extends MY_Controller {
 
     function getItemsImportByType(){
         $type = $this->input->post('type');
+        echo $type;
         if($type == 1){
             $list_catalog = $this->catalog_model->get_list();
             $items = array();
@@ -215,7 +219,8 @@ Class Warehouse extends MY_Controller {
             }
         }
         else if($type == 2 || $type == 3){
-            $untensils = $this->utensils_model->get_list(array('where'=>array('type'=>$type - 1)));
+            $untensils = $this->utensils_model->get_list(array('where'=>array('type'=>$type)));
+            echo '<option value="-1" ></option>';
             foreach ($untensils as $row){
                 echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
             }

@@ -61,4 +61,5 @@ $route['search'] = 'home/search';
 $route['search/(:num)'] = 'home/search';
 $route['gioi-thieu\.html'] = 'home/intro';
 $route['lien-he\.html'] = 'home/contact';
+$route['dat-ban\.html'] = 'home/book';
 $route['Employee'] = 'admin/login';
