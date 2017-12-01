@@ -104,24 +104,23 @@ Class Home extends MY_Controller {
 		$number = $this->input->post('txtNumber');
 		$time = $this->input->post('txtTime');
 		$message = $this->input->post('txtMessage');
-		if($c_name != '' && $c_phone != '' && $number != '' && $time != ''){
-			echo $c_name;
+        $now = new DateTime();
+
+		if($c_name && $c_phone && $number && $time){
+//			echo 22222;
 			$dataSubmit = array(
 				'c_name'	=> $c_name,
 				'c_phone'	=> $c_phone,
 				'number'	=> $number,
 				'time'		=> $time,
-				'message'	=> $message
+				'message'	=> $message,
+                'created'   => $now->getTimestamp()
 			);
-			if($this->book_model->create($dataSubmit)){
-				echo 1;
-			}
-			else{
-				echo 0;
-			}
+			$book_id = $this->book_model->create($dataSubmit);
+			echo $book_id;
 		}
 		else{
-			echo 111;
+			echo 0;
 		}
 	}
 }

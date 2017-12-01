@@ -52,5 +52,7 @@ $(document).ready(function(){
 	    }, 500);
 	});
 
-	
+
 });
+var socket = io("http://localhost:3000");
+

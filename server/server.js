@@ -43,4 +43,8 @@ io.on("connection", function(socket){
         console.log('change order');
         io.sockets.emit('CHANGE_ORDER', data);
     });
+    socket.on("BOOK_TABLE", function(data){
+        console.log('BOOK_TABLE');
+        io.sockets.emit('BOOK_TABLE', data);
+    });
 });

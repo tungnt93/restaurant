@@ -121,6 +121,10 @@
         });
     });
 
+    socket.on('BOOK_TABLE', function (book_id) {
+
+    });
+
     $(document).ready(function() {
         socket.emit('CLIENT_SEND', 'test');
         $('#tb-payment').dataTable({});
